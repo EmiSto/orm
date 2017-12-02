@@ -15,7 +15,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JLabel;
 
 public class Snake extends JFrame {
-
+    
     World w;
     playerInput pi;
 

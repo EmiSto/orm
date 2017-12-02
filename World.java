@@ -21,10 +21,15 @@ import javax.swing.JPanel;
  */
 public class World extends JPanel implements ActionListener {
 
+    public boolean Up = false;
+    public boolean Right = true;
+    public boolean Left = false;
+    public boolean Down = false;
+
     int worldX;
     int worldY;
 
-    int moveSize = 10;
+    int moveSize = 20;
 
     int ballHeight = 20;
     int ballWidth = 20;
@@ -42,6 +47,10 @@ public class World extends JPanel implements ActionListener {
         this.nBalls = 1;
         this.xBalls.add(x);
         this.yBalls.add(y);
+        grow();
+        grow();
+        grow();
+        grow();
 
         this.fruit = new Fruit(worldX, worldY);
 
@@ -56,11 +65,13 @@ public class World extends JPanel implements ActionListener {
 
         int x;
         int y;
-        for (int i = 0; i < nBalls; i++) {
+        for (int i = 0; i < nBalls - 1; i++) {
             x = xBalls.get(i);
             y = yBalls.get(i);
-            g.fillOval(x, y, ballWidth, ballHeight);
+            g.fillRect(x, y, ballWidth, ballHeight);
         }
+        g.setColor(Color.red);
+        g.fillRect(xBalls.get(nBalls - 1), yBalls.get(nBalls - 1), ballWidth, ballHeight);
 
         g.fillRect(fruit.getxFruit(), fruit.getyFruit(), fruit.getWidth(), fruit.getHeight());
     }
@@ -75,74 +86,73 @@ public class World extends JPanel implements ActionListener {
         yBalls.add(0, y);
     }
 
-    public void moveDown() {
+    public void move() {
+        int x;
+        int y;
 
-        int x = this.xBalls.get(nBalls - 1);
-        int y = this.yBalls.get(nBalls - 1);
-        y = y + moveSize;
+        if (Up) {
 
-        this.xBalls.add(x);
-        this.yBalls.add(y);
+            x = this.xBalls.get(nBalls - 1);
+            y = this.yBalls.get(nBalls - 1);
+            y = y - moveSize;
 
-        this.xBalls.remove(0);
-        this.yBalls.remove(0);
+            this.xBalls.add(x);
+            this.yBalls.add(y);
 
-        if (eat()) {
-            grow();
-            respawnFruit();
-        }
-    }
+            this.xBalls.remove(0);
+            this.yBalls.remove(0);
 
-    public void moveUp() {
+            if (eat()) {
+                grow();
+                respawnFruit();
+            }
+        } else if (Down) {
 
-        int x = this.xBalls.get(nBalls - 1);
-        int y = this.yBalls.get(nBalls - 1);
-        y = y - moveSize;
+            x = this.xBalls.get(nBalls - 1);
+            y = this.yBalls.get(nBalls - 1);
+            y = y + moveSize;
 
-        this.xBalls.add(x);
-        this.yBalls.add(y);
+            this.xBalls.add(x);
+            this.yBalls.add(y);
 
-        this.xBalls.remove(0);
-        this.yBalls.remove(0);
+            this.xBalls.remove(0);
+            this.yBalls.remove(0);
 
-        if (eat()) {
-            grow();
-            respawnFruit();
-        }
-    }
+            if (eat()) {
+                grow();
+                respawnFruit();
+            }
+        } else if (Left) {
+            x = this.xBalls.get(nBalls - 1);
+            y = this.yBalls.get(nBalls - 1);
+            x = x - moveSize;
 
-    public void moveLeft() {
+            this.xBalls.add(x);
+            this.yBalls.add(y);
 
-        int x = this.xBalls.get(nBalls - 1);
-        int y = this.yBalls.get(nBalls - 1);
-        x = x - moveSize;
+            this.xBalls.remove(0);
+            this.yBalls.remove(0);
 
-        this.xBalls.add(x);
-        this.yBalls.add(y);
+            if (eat()) {
+                grow();
+                respawnFruit();
+            }
+        } else if (Right) {
+            x = this.xBalls.get(nBalls - 1);
+            y = this.yBalls.get(nBalls - 1);
+            x = x + moveSize;
 
-        this.xBalls.remove(0);
-        this.yBalls.remove(0);
+            this.xBalls.add(x);
+            this.yBalls.add(y);
 
-        if (eat()) {
-            grow();
-            respawnFruit();
-        }
-    }
+            this.xBalls.remove(0);
+            this.yBalls.remove(0);
 
-    public void moveRight() {
-        int x = this.xBalls.get(nBalls - 1);
-        int y = this.yBalls.get(nBalls - 1);
-        x = x + moveSize;
+            if (eat()) {
+                grow();
+                respawnFruit();
+            }
 
-        this.xBalls.add(x);
-        this.yBalls.add(y);
-
-        this.xBalls.remove(0);
-        this.yBalls.remove(0);
-
-        if (eat()) {
-            grow();
-            respawnFruit();
         }
 
     }
@@ -150,9 +160,9 @@ public class World extends JPanel implements ActionListener {
     public boolean eat() {
         int xHead = xBalls.get(nBalls - 1);
         int xFruit = fruit.getxFruit();
-        int yHead = yBalls.get(nBalls -1);
+        int yHead = yBalls.get(nBalls - 1);
         int yFruit = fruit.getyFruit();
-    
+
         boolean xCollision = xHead <= xFruit + fruit.getWidth() && xHead >= xFruit - fruit.getWidth();
         boolean yCollision = yHead <= yFruit + fruit.getHeight() && yHead >= yFruit - fruit.getHeight();
         if (xCollision && yCollision) {
@@ -167,6 +177,30 @@ public class World extends JPanel implements ActionListener {
         fruit.setyFruit((int) (Math.random() * this.worldY));
     }
 
+    public void checkCollision() {
+        
+        int x = xBalls.get(nBalls-1);
+        int y = yBalls.get(nBalls-1);
+        for (int i = 0; i < nBalls - 1; i++) {
+
+            if ((xBalls.get(nBalls - 1).equals( xBalls.get(i))) && (yBalls.get(nBalls - 1).equals(  yBalls.get(i)))) {
+                System.out.println("Game over");
+            }
+        }
+        if(x >= worldX - ballWidth){
+           System.out.println("högervägg");
+        }
+        if(x < 0 + ballWidth){
+            System.out.println("Vänstervägg");
+        }
+        if(y >= worldY - ballHeight/2){
+            System.out.println("golvet");
+        }
+        if(y < 0 + ballHeight){
+            System.out.println("taket");
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -175,26 +209,54 @@ public class World extends JPanel implements ActionListener {
     private class TAdapter extends KeyAdapter {
 
         public void keyPressed(KeyEvent e) {
-            int key = e.getKeyCode();
-
-            if (key == KeyEvent.VK_DOWN) {
-                moveDown();
+            int keyCode = e.getKeyCode();
+            switch (keyCode) {
+                case KeyEvent.VK_UP:
+                    if (Down) {
+                        break;
+                    }
+                    Up = true;
+                    Down = false;
+                    Right = false;
+                    Left = false;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    if (Up) {
+                        break;
+                    }
+                    Up = false;
+                    Down = true;
+                    Right = false;
+                    Left = false;
+                    break;
+                case KeyEvent.VK_LEFT:
+                    if (Right) {
+                        break;
+                    }
+                    Up = false;
+                    Down = false;
+                    Right = false;
+                    Left = true;
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    if (Left) {
+                        break;
+                    }
+                    Up = false;
+                    Down = false;
+                    Right = true;
+                    Left = false;
+                    break;
+                default:
+                    break;
             }
 
-            if (key == KeyEvent.VK_UP) {
-                moveUp();
-            }
-
-            if (key == KeyEvent.VK_RIGHT) {
-                moveRight();
-            }
-
-            if (key == KeyEvent.VK_LEFT) {
-                moveLeft();
-            }
+            move();
+            checkCollision();
             repaint();
         }
     }
+
 
     /*public static void main(String args[]) {
         JFrame js = new JFrame();
