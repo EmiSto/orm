@@ -1,52 +1,53 @@
-package swingtest;
-
-import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import javax.swing.JLabel;
 
-public class Snake extends JFrame {
+class Snake {
+
+    public int worldX;
+    public int worldY;
+    public int moveSize = 20;
+    public int ballHeight = 20;
+    public int ballWidth = 20;
+    public int nBalls;
+    public ArrayList<Integer> xBalls = new ArrayList<Integer>();
+    public ArrayList<Integer> yBalls = new ArrayList<Integer>();
+
+    public Snake(int posX, int posY, int worldX, int worldY){
+	this.worldX = worldX;
+	this.worldY = worldY;
+
+	this.nBalls = 4;
+	this.xBalls.add(posX);
+	this.yBalls.add(posY);
+	this.xBalls.add(posX + ballHeight);
+	this.yBalls.add(posY + ballsWidth);
+	this.xBalls.add(posX + 2*ballHeight);
+	this.yBalls.add(posY + 2*ballsWidth);
+	this.xBalls.add(posX + 3*ballHeight);
+	this.yBalls.add(posY + 3*ballsWidth);
+    }
     
-    World w;
-    playerInput pi;
+    public void checkCollision() {
+        
+        int x = xBalls.get(nBalls-1);
+        int y = yBalls.get(nBalls-1);
+        for (int i = 0; i < nBalls - 1; i++) {
 
-    public Snake() {
-
-        setSize(800, 800);
-        setTitle("Orm");
-        setResizable(false);
-        setBackground(Color.black);
-
-
-        this.w = new World(20, 200, 800, 800);
-        w.setBackground(Color.black);
-
-        add(this.w);
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-    public void bl() {
-        System.out.println("BLARAHGH");
-    }
-
-    public static void main(String args[]) {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Snake snok = new Snake();
-                snok.setVisible(true);
+            if ((xBalls.get(nBalls - 1).equals( xBalls.get(i))) && (yBalls.get(nBalls - 1).equals(  yBalls.get(i)))) {
+                System.out.println("Game over");
             }
-        });
+        }
+        if(x >= worldX - ballWidth){
+           System.out.println("högervägg");
+        }
+        if(x < 0 + ballWidth){
+            System.out.println("Vänstervägg");
+        }
+        if(y >= worldY - ballHeight/2){
+            System.out.println("golvet");
+        }
+        if(y < 0 + ballHeight){
+            System.out.println("taket");
+        }
     }
-
+    
 }
