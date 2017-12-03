@@ -1,52 +1,96 @@
-package swingtest;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
 import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import javax.swing.JLabel;
+import java.util.ArrayList;
 
-public class Snake extends JFrame {
+public abstract class Snake {
+
+    public boolean Up = false;
+    public boolean Right = true;
+    public boolean Left = false;
+    public boolean Down = false;
+
+    public int nBalls;
+    public ArrayList<Integer> xBalls = new ArrayList<Integer>();
+    public ArrayList<Integer> yBalls = new ArrayList<Integer>();
+
+    public int moveSize = 20;
+    public int ballHeight = 20;
+    public int ballWidth = 20;
+
+    public int worldX;
+    public int worldY;
     
-    World w;
-    playerInput pi;
-
-    public Snake() {
-
-        setSize(800, 800);
-        setTitle("Orm");
-        setResizable(false);
-        setBackground(Color.black);
-
-
-        this.w = new World(20, 200, 800, 800);
-        w.setBackground(Color.black);
-
-        add(this.w);
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public char name;
+    
+    boolean alive = true;
+    Color color;
+    
+     public void setDirection(char c) {
+        if (c == 'U') {
+            Up = true;
+            Down = false;
+            Right = false;
+            Left = false;
+        }
+        if (c == 'D') {
+            Up = false;
+            Down = true;
+            Right = false;
+            Left = false;
+        }
+        if (c == 'R') {
+            Up = false;
+            Down = false;
+            Right = true;
+            Left = false;
+        }
+        if (c == 'L') {
+            Up = false;
+            Down = false;
+            Right = false;
+            Left = true;
+        }
     }
 
-    public void bl() {
-        System.out.println("BLARAHGH");
+    public char[] getDirection() {
+        char[] info = new char[2];
+        info[0] = this.name;
+        if (Up) {
+            info[1] = 'U';
+        }
+        if (Down) {
+            info[1] = 'D';
+        }
+        if (Right) {
+            info[1] = 'R';
+        }
+        if (Left) {
+            info[1] = 'L';
+        }
+        return info;
     }
 
-    public static void main(String args[]) {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Snake snok = new Snake();
-                snok.setVisible(true);
-            }
-        });
+    public ArrayList<Integer> getSnakeX() {
+        return xBalls;
     }
 
+    public ArrayList<Integer> getSnakeY() {
+        return yBalls;
+    }
+
+    public int getSize() {
+        return this.nBalls;
+    }
+    
+    public Color getColor(){
+        return color;
+    }
+    
+    public int getHeight(){
+        return ballHeight;
+    }
+    
+    public int getWidth(){
+        return ballWidth;
+    }
 }
