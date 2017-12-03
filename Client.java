@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> 880667ec38cfb10ec1b1db2490fbbffed71ae5ec
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.Timer;
@@ -10,7 +7,6 @@ import javax.swing.JComponent;
 import java.util.concurrent.TimeUnit;
 import java.awt.event.*;
 import java.lang.Boolean;
-<<<<<<< HEAD
 import java.util.ArrayList;
 
 class Client extends Canvas implements ActionListener {
@@ -66,6 +62,24 @@ class Client extends Canvas implements ActionListener {
     }
 
     public void update() {
+
+    }
+
+    public void updatesnakes(ArrayList<Snake> snakes) {
+        for (int i = 0; i < snakes.size(); i++) {
+            if (this.mySnake.getName() == snakes.get(i).getName()) {
+                this.mySnake.setDirection(snakes.get(i).getDirection()[1]);
+                this.mySnake.updatePos(snakes.get(i).getSnakeX(), snakes.get(i).getSnakeY());
+            } else {
+                for (int j = 0; j < otherSnake.size(); i++) {
+                    if (this.otherSnake.get(j).getName() == snakes.get(i).getName()) {
+                        this.otherSnake.get(j).setDirection(snakes.get(i).getDirection()[1]);
+                        this.otherSnake.get(j).updatePos(snakes.get(i).getSnakeX(), snakes.get(i).getSnakeY());
+                    }
+                }
+            }
+        }
+
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -73,31 +87,11 @@ class Client extends Canvas implements ActionListener {
         repaint();
         timer.setInitialDelay(pause);
         timer.start();
-=======
 
-class Client extends Canvas implements ActionListener
-{
-    //World w;
-    // playerInput pi;
-    publice int worldX = 800;
-    public int worldY = 600;
-
-    public paint(Graphics g){
-	
-    }
-    
-    public void update(){
-    }
-    
-    public void actionPerformed(ActionEvent e) {
-	update();
-	repaint();
->>>>>>> 880667ec38cfb10ec1b1db2490fbbffed71ae5ec
     }
 
     private class TAdapter extends KeyAdapter {
 
-<<<<<<< HEAD
         public void keyPressed(KeyEvent e) {
             int keyCode = e.getKeyCode();
             switch (keyCode) {
@@ -135,45 +129,5 @@ class Client extends Canvas implements ActionListener
     public static void main(String args[]) {
         Client client = new Client();
         client.initGame(client);
-=======
-	public void keyPressed(KeyEvent e){
-	    int keyCode = e.getKeyCode();
-	    switch(keyCode){
-	    case KeyEvent.VK_UP:
-		System.out.println("UP");
-		break;
-	    case KeyEvent.VK_DOWN:
-
-		System.out.println("DOWN");
-		break;
-	    case KeyEvent.VK_LEFT:
-
-		System.out.println("LEFT");
-		break;
-	    case KeyEvent.VK_RIGHT:
-		System.out.println("RIGHT");
-		break;
-	    default:
-		break;
-	    }
-	}
-    }
-    
-    private void initGame(Client c) {
-	JFrame jf = new JFrame("New Window");
-	setFocusable(true);
-	jf.setSize(worldX, worldY);
-	jf.setVisible(true);
-	jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	jf.add(c);
-        setBackground(Color.black);
-	addKeyListener(new TAdapter());
-    }
-    
-    public static void main(String args[])
-    {
-	Client client = new Client();
-	client.initGame(client);
->>>>>>> 880667ec38cfb10ec1b1db2490fbbffed71ae5ec
     }
 }

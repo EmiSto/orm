@@ -1,6 +1,8 @@
 
 import java.util.ArrayList;
 
+//c[0] är namn
+//c[1] är direction
 public class World {
 
     ArrayList<ServerSnake> snake;
@@ -20,6 +22,19 @@ public class World {
             }
         }
     }
+    
+    //sätter ny riktning och flyttar ormen
+    public void updatePosition(char c[]){
+        for(int i = 0; i<snake.size()-1; i++){
+            if(snake.get(i).getName() == c[0]){
+                snake.get(i).setDirection(c[1]);
+                snake.get(i).move();
+                break;
+            }
+        }
+    }
+    
+
     
     public ArrayList<ServerSnake> getSnakes(){
         return this.snake;

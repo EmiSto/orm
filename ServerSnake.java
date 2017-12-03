@@ -1,27 +1,9 @@
 
 import java.util.ArrayList;
 
-public class ServerSnake {
+public class ServerSnake extends Snake {
 
-    private boolean Up = false;
-    private boolean Right = true;
-    private boolean Left = false;
-    private boolean Down = false;
-
-    int worldX;
-    int worldY;
-
-    int moveSize = 20;
-
-    int ballHeight = 20;
-    int ballWidth = 20;
-    int nBalls;
-    ArrayList<Integer> xBalls = new ArrayList<Integer>();
-    ArrayList<Integer> yBalls = new ArrayList<Integer>();
-    
-    private char name;
-    
-    public void ServerSnake(char name){
+    public ServerSnake(char name) {
         this.name = name;
     }
 
@@ -78,43 +60,16 @@ public class ServerSnake {
         }
     }
 
-    public void setDirection(char c) {
-        if (c == 'U') {
-            Up = true;
-            Down = false;
-            Right = false;
-            Left = false;
-        }
-        if (c == 'D') {
-            Up = false;
-            Down = true;
-            Right = false;
-            Left = false;
-        }
-        if (c == 'R') {
-            Up = false;
-            Down = false;
-            Right = true;
-            Left = false;
-        }
-        if (c == 'L') {
-            Up = false;
-            Down = false;
-            Right = false;
-            Left = true;
-        }
-    }
-    
-    public char getName(){
-        return this.name;
-    }
-
     public ArrayList<Integer> getSnakeX() {
         return xBalls;
     }
 
     public ArrayList<Integer> getSnakeY() {
         return yBalls;
+    }
+
+    public int getSize() {
+        return this.nBalls;
     }
 
     public void grow() {
