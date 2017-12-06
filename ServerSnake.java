@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class ServerSnake extends Snake {
 
     public ServerSnake(char name) {
-        this.name = name;
+        super(name);
     }
 
     public void move() {

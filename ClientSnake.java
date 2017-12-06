@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class ClientSnake extends Snake{
 
+    public ClientSnake(char c){
+	super(c);
+    }
 
 
     public void checkCollision() {

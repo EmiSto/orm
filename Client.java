@@ -1,19 +1,19 @@
-
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.Timer;
 import javax.swing.JFrame;
 import javax.swing.JComponent;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
 import java.awt.event.*;
 import java.lang.Boolean;
-import java.util.ArrayList;
+import java.io.*;
+import java.net.*;
 
 class Client extends Canvas implements ActionListener {
 
     private Timer timer;
-    private int speed;
-    private int pause;
+    private int speed = 500;
+    private int pause = 1000;
     //World w;
     // playerInput pi;
     public int worldX = 800;
@@ -61,10 +61,30 @@ class Client extends Canvas implements ActionListener {
         }
     }
 
-    public void update() {
-
+    public void update() throws Exception {
+	sendDirections();
     }
 
+    public void sendDirections()throws Exception{
+	DatagramSocket clientSocket = new DatagramSocket();
+	String ip = "192.168.1.89";
+	int port = 9876;
+	InetAddress IPAddress = InetAddress.getByName(ip);
+	char[] direction = mySnake.getDirection();
+	String dirString = "" + direction[0] + direction[1];
+	
+	byte[] sendData = new byte[2048];
+        byte[] receiveData = new byte[2048];
+	sendData = dirString.getBytes();
+	DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+	clientSocket.send(sendPacket);
+
+	DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+	clientSocket.receive(receivePacket);
+	String received = new String(receivePacket.getData());
+	System.out.println("Server: " + received);
+    }
+    
     public void updatesnakes(ArrayList<Snake> snakes) {
         for (int i = 0; i < snakes.size(); i++) {
             if (this.mySnake.getName() == snakes.get(i).getName()) {
@@ -82,12 +102,15 @@ class Client extends Canvas implements ActionListener {
 
     }
 
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e){
+	try{
         update();
         repaint();
         timer.setInitialDelay(pause);
         timer.start();
-
+	}catch(Exception ktffkf){
+	    System.out.println("throw that shit");
+	}
     }
 
     private class TAdapter extends KeyAdapter {
@@ -96,16 +119,16 @@ class Client extends Canvas implements ActionListener {
             int keyCode = e.getKeyCode();
             switch (keyCode) {
                 case KeyEvent.VK_UP:
-                    this.mySnake.setDirection('U');
+                    mySnake.setDirection('U');
                     break;
                 case KeyEvent.VK_DOWN:
-                    this.mySnake.setDirection('D');
+                    mySnake.setDirection('D');
                     break;
                 case KeyEvent.VK_LEFT:
-                    this.mySnake.setDirection('L');
+                    mySnake.setDirection('L');
                     break;
                 case KeyEvent.VK_RIGHT:
-                    this.mySnake.setDirection('R');
+                    mySnake.setDirection('R');
                     break;
                 default:
                     break;
@@ -128,6 +151,7 @@ class Client extends Canvas implements ActionListener {
 
     public static void main(String args[]) {
         Client client = new Client();
+	client.mySnake = new ClientSnake('a');
         client.initGame(client);
     }
 }

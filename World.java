@@ -36,7 +36,7 @@ public class World {
     
 
     
-    public ArrayList<ServerSnake> getSnakes(){
+    public ArrayList<Snake> getSnakes(){
         return this.snake;
     }
 }

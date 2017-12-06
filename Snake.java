@@ -24,6 +24,10 @@ public abstract class Snake {
     
     boolean alive = true;
     Color color;
+
+    public Snake(char c){
+	this.name = c;
+    }
     
      public void setDirection(char c) {
         if (c == 'U') {
