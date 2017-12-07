@@ -3,14 +3,15 @@ import java.net.*;
 import java.util.*;
 
 public class Server{
+
     
     public static void main(String args[]){
 	try{
 	    //gör IdHandler som hanterar första paketet klienterna skickar, typ samma som PacketHandler, ge varje klient en unik ID
 
 	    World world = new World();
-	    world.addSnake('a');
-	    
+	    world.addSnake('a', "Shapo");
+	    System.out.println("" + world.getSnakes().size());
 	    //skapar en ny socket med port 9876
 	    //skapar en buffer att ta emot data i
 	    int port = 9876;

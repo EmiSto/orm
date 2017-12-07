@@ -14,13 +14,14 @@ class Client extends Canvas implements ActionListener {
     private Timer timer;
     private int speed = 500;
     private int pause = 1000;
+    private Parser parser = new Parser();
     //World w;
     // playerInput pi;
     public int worldX = 800;
     public int worldY = 600;
 
-    public ClientSnake mySnake;
-    public ArrayList<ClientSnake> otherSnake;
+    public Snake mySnake;
+    public ArrayList<Snake> otherSnake = new ArrayList();
 
     public void paint(Graphics g) {
 
@@ -67,7 +68,8 @@ class Client extends Canvas implements ActionListener {
 
     public void sendDirections()throws Exception{
 	DatagramSocket clientSocket = new DatagramSocket();
-	String ip = "192.168.1.89";
+	//String ip = "192.168.1.89";
+	String ip = "192.168.1.205";
 	int port = 9876;
 	InetAddress IPAddress = InetAddress.getByName(ip);
 	char[] direction = mySnake.getDirection();
@@ -83,21 +85,38 @@ class Client extends Canvas implements ActionListener {
 	clientSocket.receive(receivePacket);
 	String received = new String(receivePacket.getData());
 	System.out.println("Server: " + received);
+	updateSnakes(received);
     }
     
-    public void updatesnakes(ArrayList<Snake> snakes) {
-        for (int i = 0; i < snakes.size(); i++) {
-            if (this.mySnake.getName() == snakes.get(i).getName()) {
-                this.mySnake.setDirection(snakes.get(i).getDirection()[1]);
-                this.mySnake.updatePos(snakes.get(i).getSnakeX(), snakes.get(i).getSnakeY());
-            } else {
-                for (int j = 0; j < otherSnake.size(); i++) {
-                    if (this.otherSnake.get(j).getName() == snakes.get(i).getName()) {
-                        this.otherSnake.get(j).setDirection(snakes.get(i).getDirection()[1]);
-                        this.otherSnake.get(j).updatePos(snakes.get(i).getSnakeX(), snakes.get(i).getSnakeY());
-                    }
-                }
-            }
+    public void updateSnakes(String snakes) {
+	ArrayList<String> info = parser.parse(snakes);
+	char id;
+	String headX;
+	String headY;
+
+	for (int i = 0; i < 1 + otherSnake.size(); i++) {
+	    id = info.get(0).charAt(0);
+	    headX = info.get(1);
+	    headY = info.get(2);
+	    // System.out.println(id);
+	    if(id == mySnake.getName()) {
+		mySnake.updateHead(headX, headY);		
+		info.remove(0);
+		info.remove(0);
+		info.remove(0);
+		System.out.println("Updated");
+	    }
+	    else{
+		for(int j = 0; j < otherSnake.size()-1; j++){
+		    if(id == otherSnake.get(j).getName()){
+			otherSnake.get(j).updateHead(headX, headY);
+			info.remove(0);
+			info.remove(0);
+			info.remove(0);
+		    }
+		}
+	    }
+        
         }
 
     }
@@ -149,9 +168,14 @@ class Client extends Canvas implements ActionListener {
         timer.start();
     }
 
+    private void makeMySnake(String pos, String pName){
+	ArrayList<String> parsed = parser.parse(pos);
+	mySnake = new Snake(parsed.get(0).charAt(0), pName, parsed.get(1), parsed.get(2));
+    }
+    
     public static void main(String args[]) {
         Client client = new Client();
-	client.mySnake = new ClientSnake('a');
+	client.mySnake = new Snake('a', "Shapo", 20, 20);
         client.initGame(client);
     }
 }

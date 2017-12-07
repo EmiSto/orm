@@ -6,6 +6,7 @@ public class PacketHandler implements Runnable{
     private DatagramSocket serverSocket;
     private DatagramPacket receivePacket;
     private byte[] sendData;
+    private World world;
 
     //konstruktor
     PacketHandler(DatagramPacket receivePacket, DatagramSocket serverSocket, World world){
@@ -13,6 +14,7 @@ public class PacketHandler implements Runnable{
 	this.serverSocket = serverSocket;
 	this.receivePacket = receivePacket;
 	this.sendData = new byte[2048];
+	this.world = world;
 	System.out.println("creating thread" );
 	  
     }
@@ -29,9 +31,10 @@ public class PacketHandler implements Runnable{
 
 	    world.updatePosition(chars);
 	    System.out.println("id: " + c1 + "dir: " + c2);
-	    
+	    //this.sendData = world.response().getBytes();
+	    this.sendData = (world.response()).getBytes();
 	    //Gör om msg till ett DatagramPacket som sedan skickas till klienten genom socketen
-	    DatagramPacket response = new DatagramPacket(this.sendData, sendData.length,);
+	    //DatagramPacket response = new DatagramPacket(this.sendData, sendData.length,);
 	    //
 	    //
 							 
