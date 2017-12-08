@@ -19,72 +19,74 @@ public class Snake {
 
     public int worldX = 800;
     public int worldY = 600;
-    
+
     public char name;
     private String playerName;
     private boolean dead = false;
-    
+
     Color color;
 
-    public Snake(char c, String p, int startPosX, int startPosY){
-	this.name = c;
-	this.playerName = p;
+    public Snake(char c, String p, int startPosX, int startPosY) {
+        this.name = c;
+        this.playerName = p;
 
-	xBalls.add(0, startPosX);
-	yBalls.add(0, startPosY);
-	
-	xBalls.add(0, startPosX);
-	yBalls.add(0, startPosY+20);
-	
-	xBalls.add(0, startPosX);
-	yBalls.add(0, startPosY+40);
-	
-	xBalls.add(0, startPosX);
-	yBalls.add(0, startPosY+60);
-	
-	nBalls = 4;
+        xBalls.add(0, startPosX);
+        yBalls.add(0, startPosY);
+
+        xBalls.add(0, startPosX);
+        yBalls.add(0, startPosY + 20);
+
+        xBalls.add(0, startPosX);
+        yBalls.add(0, startPosY + 40);
+
+        xBalls.add(0, startPosX);
+        yBalls.add(0, startPosY + 60);
+
+        nBalls = 4;
     }
 
-    public Snake(char c, String p, String startPosX, String startPosY){
-	this.name = c;
-	this.playerName = p;
-	int startPoX = Integer.parseInt(startPosX);
-	int startPoY = Integer.parseInt(startPosY);
-	xBalls.add(0, startPoX);
-	yBalls.add(0, startPoY);
-	
-	xBalls.add(0, startPoX);
-	yBalls.add(0, startPoY+20);
-	
-	xBalls.add(0, startPoX);
-	yBalls.add(0, startPoY+40);
-	
-	xBalls.add(0, startPoX);
-	yBalls.add(0, startPoY+60);
-	
-	nBalls = 4;
-    }	
-    
+    public Snake(char c, String p, String startPosX, String startPosY) {
+        this.name = c;
+        this.playerName = p;
+        int startPoX = Integer.parseInt(startPosX);
+        int startPoY = Integer.parseInt(startPosY);
+        xBalls.add(0, startPoX);
+        yBalls.add(0, startPoY);
+
+        xBalls.add(0, startPoX);
+        yBalls.add(0, startPoY + 20);
+
+        xBalls.add(0, startPoX);
+        yBalls.add(0, startPoY + 40);
+
+        xBalls.add(0, startPoX);
+        yBalls.add(0, startPoY + 60);
+
+        nBalls = 4;
+    }
+
     public void setDirection(char c) {
-        if (c == 'U') {
+        if (c == 'U' && !Down) {
+
             Up = true;
             Down = false;
             Right = false;
             Left = false;
         }
-        if (c == 'D') {
+        if (c == 'D' && !Up) {
+
             Up = false;
             Down = true;
             Right = false;
             Left = false;
         }
-        if (c == 'R') {
+        if (c == 'R' && !Left) {
             Up = false;
             Down = false;
             Right = true;
             Left = false;
         }
-        if (c == 'L') {
+        if (c == 'L' && !Right) {
             Up = false;
             Down = false;
             Right = false;
@@ -118,21 +120,27 @@ public class Snake {
 
             if ((xBalls.get(nBalls - 1).equals(xBalls.get(i))) && (yBalls.get(nBalls - 1).equals(yBalls.get(i)))) {
                 System.out.println("Game over");
+                this.dead = true;
             }
         }
         if (x >= worldX - ballWidth) {
             System.out.println("högervägg");
+            this.dead = true;
         }
         if (x < 0 + ballWidth) {
             System.out.println("Vänstervägg");
+            this.dead = true;
         }
-        if (y >= worldY - ballHeight / 2) {
+        if (y >= worldY - ballHeight) {
             System.out.println("golvet");
+            this.dead = true;
         }
         if (y < 0 + ballHeight) {
             System.out.println("taket");
+            this.dead = true;
         }
     }
+
     public void move() {
         int x;
         int y;
@@ -203,46 +211,62 @@ public class Snake {
     public ArrayList<Integer> getSnakeY() {
         return yBalls;
     }
-    
-    public void updatePos(ArrayList<Integer> xBalls, ArrayList<Integer> yBalls){
+
+    public void updatePos(ArrayList<Integer> xBalls, ArrayList<Integer> yBalls) {
         this.xBalls = xBalls;
         this.yBalls = yBalls;
     }
 
-    public void updateHead(String hX, String hY){
-	int headX = Integer.parseInt(hX);
-	int headY = Integer.parseInt(hY);
-	xBalls.add(xBalls.size(), headX);
-	xBalls.remove(0);
-	yBalls.add(yBalls.size(), headY);
-	yBalls.remove(0);
+    public void updateHead(String hX, String hY) {
+        int headX = Integer.parseInt(hX);
+        int headY = Integer.parseInt(hY);
+        xBalls.add(xBalls.size(), headX);
+        xBalls.remove(0);
+        yBalls.add(yBalls.size(), headY);
+        yBalls.remove(0);
     }
 
-    public String getHead(){
-	return xBalls.get(xBalls.size()-1) + ";" + yBalls.get(yBalls.size()-1) + ";";
+    public String getHead() {
+        return xBalls.get(xBalls.size() - 1) + ";" + yBalls.get(yBalls.size() - 1) + ";";
     }
 
     public int getSize() {
         return this.nBalls;
     }
-    
-    public Color getColor(){
+
+    public Color getColor() {
         return color;
     }
-    
-    public int getHeight(){
+
+    public int getHeight() {
         return ballHeight;
     }
-    
-    public int getWidth(){
+
+    public int getWidth() {
         return ballWidth;
     }
-    
+
     public char getName() {
         return this.name;
     }
 
-    public String getPlayerName(){
-	return this.playerName;
+    public String getPlayerName() {
+        return this.playerName;
+    }
+
+    public boolean isDead() {
+        return this.dead;
+    }
+
+    public void collideSnake(Snake s) {
+        int sSize = s.getSize();
+        int x = this.xBalls.get(this.nBalls - 1);
+        int y = this.yBalls.get(this.nBalls - 1);
+        for (int i = 0; i < sSize; i++) {
+            if (x == s.getSnakeX().get(i) && y == s.getSnakeY().get(i)) {
+                this.dead = true;
+                break;
+            }
+        }
     }
 }
