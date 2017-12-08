@@ -66,25 +66,27 @@ public class Snake {
     }	
     
     public void setDirection(char c) {
-        if (c == 'U') {
+        if (c == 'U' && !Down) {
+          
             Up = true;
             Down = false;
             Right = false;
             Left = false;
         }
-        if (c == 'D') {
+        if (c == 'D' && !Up) {
+            
             Up = false;
             Down = true;
             Right = false;
             Left = false;
         }
-        if (c == 'R') {
+        if (c == 'R' && !Left) {
             Up = false;
             Down = false;
             Right = true;
             Left = false;
         }
-        if (c == 'L') {
+        if (c == 'L' && !Right) {
             Up = false;
             Down = false;
             Right = false;
