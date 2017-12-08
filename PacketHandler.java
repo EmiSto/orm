@@ -35,8 +35,7 @@ public class PacketHandler implements Runnable{
 	    this.sendData = (world.response()).getBytes();
 	    //Gör om msg till ett DatagramPacket som sedan skickas till klienten genom socketen
 	    //DatagramPacket response = new DatagramPacket(this.sendData, sendData.length,);
-	    //
-	    //
+
 							 
 	    DatagramPacket response = new DatagramPacket(this.sendData, this.sendData.length, this.receivePacket.getAddress(), this.receivePacket.getPort());
 	    this.serverSocket.send(response);

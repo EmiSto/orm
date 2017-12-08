@@ -4,6 +4,7 @@ import javax.swing.Timer;
 import javax.swing.JFrame;
 import javax.swing.JComponent;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.awt.event.*;
 import java.lang.Boolean;
 import java.io.*;
@@ -69,7 +70,7 @@ class Client extends Canvas implements ActionListener {
     public void sendDirections()throws Exception{
 	DatagramSocket clientSocket = new DatagramSocket();
 	//String ip = "192.168.1.89";
-	String ip = "192.168.1.205";
+	String ip = "192.168.1.89";
 	int port = 9876;
 	InetAddress IPAddress = InetAddress.getByName(ip);
 	char[] direction = mySnake.getDirection();
@@ -172,10 +173,35 @@ class Client extends Canvas implements ActionListener {
 	ArrayList<String> parsed = parser.parse(pos);
 	mySnake = new Snake(parsed.get(0).charAt(0), pName, parsed.get(1), parsed.get(2));
     }
+
+    public static String sendName(String name)throws Exception{
+	byte[] sendData = new byte[2048];
+	byte[] receiveData = new byte[2048];
+	int port = 9877;
+	InetAddress ip = InetAddress.getByName("192.168.1.89");
+	DatagramSocket serverSocket = new DatagramSocket(port);
+	
+
+	sendData = name.getBytes();
+	DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
+	serverSocket.send(sendPacket);
+
+	DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+	serverSocket.receive(receivePacket);
+	String idPos = new String(receivePacket.getData());
+	return idPos;
+      	
+    }
     
-    public static void main(String args[]) {
+    public static void main(String args[]) throws Exception{
         Client client = new Client();
-	client.mySnake = new Snake('a', "Shapo", 20, 20);
+	Scanner sc = new Scanner(System.in);
+	System.out.println("Namn: ");
+	String playerName = sc.nextLine();
+	
+	String idPos = sendName(playerName);
+	client.makeMySnake(idPos, playerName);
+	
         client.initGame(client);
     }
 }
