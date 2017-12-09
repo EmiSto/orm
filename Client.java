@@ -13,7 +13,7 @@ import java.net.*;
 class Client extends Canvas implements ActionListener {
 
     private Timer timer;
-    private int speed = 500;
+    private int speed = 400;
     private int pause = 1000;
     private Parser parser = new Parser();
     //World w;
@@ -47,7 +47,7 @@ class Client extends Canvas implements ActionListener {
         g.fillRect(xBalls.get(nBalls - 1), yBalls.get(nBalls - 1), ballWidth, ballHeight);
 
         //Rita alla andras ormar
-        for (int i = 0; i < otherSnake.size() - 1; i++) {
+        for (int i = 0; i < otherSnake.size(); i++) {
             g.setColor(otherSnake.get(i).getColor());
             nBalls = otherSnake.get(i).getSize();
             xBalls = otherSnake.get(i).getSnakeX();
@@ -109,7 +109,7 @@ class Client extends Canvas implements ActionListener {
 		System.out.println("Updated");
 	    }
 	    else{
-		for(int j = 0; j < otherSnake.size()-1; j++){
+		for(int j = 0; j < otherSnake.size(); j++){
 		    if(id == otherSnake.get(j).getName()){
 			otherSnake.get(j).updateHead(headX, headY);
 			info.remove(0);
@@ -204,11 +204,15 @@ class Client extends Canvas implements ActionListener {
 	
 
 	sendData = name.getBytes();
+	System.out.println("innan sendpacket");
 	DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
 	serverSocket.send(sendPacket);
-
+	System.out.println("efter socketsend");
+	
 	DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 	serverSocket.receive(receivePacket);
+	System.out.println("efter socket receive");
+	
 	String idPos = new String(receivePacket.getData());
 	System.out.println("client sendName: " + idPos);
 	return idPos;

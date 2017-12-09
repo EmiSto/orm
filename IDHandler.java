@@ -48,8 +48,12 @@ public class IDHandler implements Runnable{
 		    break;
 		}
 	    }
+	    int allsnakes = 0;
 	    while(this.world.getSnakes().size() != this.players){
-		//System.out.println("antal snakes: " + this.world.getSnakes().size());
+		//wtf += 1;
+		//System.out.println("antal snakes: " +
+		System.out.println("Waiting for other players...");
+	        //System.out.println("antal snakes: " + this.world.getSnakes().size());
 		//do absolutely nothing
 	    }
 	    

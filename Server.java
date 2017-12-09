@@ -42,7 +42,7 @@ public class Server{
 		//Anropar konstruktorn för PacketHandler
 		//med paketet som är mottaget och socketen
 		PacketHandler thread = new PacketHandler(receivePacket, packetSocket, world);
-		//kör "run" funktionen i tråden (som en main funktion)
+        
 	    }
 
         }catch(SocketException e){
