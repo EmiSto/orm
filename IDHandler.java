@@ -5,20 +5,26 @@ import java.io.*;
 public class IDHandler implements Runnable{
     private DatagramSocket serverSocket;
     private DatagramPacket receivePacket;
+    Thread t;
     private byte[] sendData;
     private char id;
     private World world;
+    private int players;
+    
     //konstruktor
-    IDHandler(DatagramPacket receivePacket, DatagramSocket serverSocket, char id, World world){
+    IDHandler(DatagramPacket receivePacket, DatagramSocket serverSocket, char id, World world, int players){
 
 	this.serverSocket = serverSocket;
 	this.receivePacket = receivePacket;
 	this.sendData = new byte[2048];
 	this.id = id;
 	this.world = world;
+	this.players = players;
+	t = new Thread(this, "thread");
 	System.out.println("creating id-handler thread" );
-	  
+	t.start();
     }
+   
     //kod som alla trådar kör
     public void run(){
 	System.out.println("running ID-handler thread");
@@ -26,7 +32,8 @@ public class IDHandler implements Runnable{
 	    String name = new String(receivePacket.getData());
 	    System.out.println("Name: " + name + "Id: " + id);
 	    
-	    world.addSnake(id, name);
+	    this.world.addSnake(id, name);
+	    System.out.println(id);
 	    Snake mySnake;
 	    Snake correctSnake;
 	    String idPos;
@@ -41,8 +48,10 @@ public class IDHandler implements Runnable{
 		    break;
 		}
 	    }
-	    
-	    
+	    while(this.world.getSnakes().size() != this.players){
+		//System.out.println("antal snakes: " + this.world.getSnakes().size());
+		//do absolutely nothing
+	    }
 	    
 	    DatagramPacket response = new DatagramPacket(this.sendData, this.sendData.length, this.receivePacket.getAddress(), this.receivePacket.getPort());
 	    this.serverSocket.send(response);

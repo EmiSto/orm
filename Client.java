@@ -86,6 +86,7 @@ class Client extends Canvas implements ActionListener {
 	clientSocket.receive(receivePacket);
 	String received = new String(receivePacket.getData());
 	System.out.println("Server: " + received);
+	addOtherSnakes(received);
 	updateSnakes(received);
     }
     
@@ -124,10 +125,10 @@ class Client extends Canvas implements ActionListener {
 
     public void actionPerformed(ActionEvent e){
 	try{
-        update();
-        repaint();
-        timer.setInitialDelay(pause);
-        timer.start();
+	    update();
+	    repaint();
+	    timer.setInitialDelay(pause);
+	    timer.start();
 	}catch(Exception ktffkf){
 	    System.out.println("throw that shit");
 	}
@@ -168,6 +169,26 @@ class Client extends Canvas implements ActionListener {
         timer = new Timer(speed, this);
         timer.start();
     }
+    
+    private void addOtherSnakes(String snakes) {
+	if(otherSnake.size() == 0) {
+	    ArrayList<String> parsed = parser.parse(snakes);
+	    char id;
+	    String headX;
+	    String headY;
+	    Snake snake;
+	    for(int i = 0; i < parsed.size(); i += 3){
+		
+		id = parsed.get(i).charAt(0);
+		if(id != mySnake.getName()){
+		    headX = parsed.get(i+1);
+		    headY = parsed.get(i+2);
+		    snake = new Snake(id, "John Doe", headX, headY);
+		    otherSnake.add(snake);
+		}
+	    }
+	}
+    }
 
     private void makeMySnake(String pos, String pName){
 	ArrayList<String> parsed = parser.parse(pos);
@@ -203,6 +224,7 @@ class Client extends Canvas implements ActionListener {
 	String idPos = sendName(playerName);
 	System.out.println("client main: " + idPos);
 	client.makeMySnake(idPos, playerName);
+	
 	
         client.initGame(client);
     }

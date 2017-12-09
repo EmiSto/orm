@@ -7,6 +7,7 @@ public class PacketHandler implements Runnable{
     private DatagramPacket receivePacket;
     private byte[] sendData;
     private World world;
+    Thread t;
 
     //konstruktor
     PacketHandler(DatagramPacket receivePacket, DatagramSocket serverSocket, World world){
@@ -15,7 +16,9 @@ public class PacketHandler implements Runnable{
 	this.receivePacket = receivePacket;
 	this.sendData = new byte[2048];
 	this.world = world;
+	t = new Thread(this, "thread");
 	System.out.println("creating thread" );
+	t.start();
 	  
     }
     //kod som alla trådar kör

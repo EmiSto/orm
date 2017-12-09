@@ -7,7 +7,8 @@ public class Server{
     public static void main(String args[]){
 	try{
 	    //gör IdHandler som hanterar första paketet klienterna skickar, typ samma som PacketHandler, ge varje klient en unik ID
-	    int players = 1;
+	    //done
+	    int players = 2;
 	    String ids = "abcd";
 	    int port = 9876;
 	    int idPort = 9877;
@@ -24,8 +25,8 @@ public class Server{
 		idSocket.receive(receiveName);
 		System.out.println("Server: " + receiveName.getData());
 		
-		IDHandler idThread = new IDHandler(receiveName, idSocket, ids.charAt(i), world);
-		idThread.run();
+		IDHandler idThread = new IDHandler(receiveName, idSocket, ids.charAt(i), world, players);
+		System.out.println("end of loop: " + i);
 	    }
 	    	   
 	    System.out.println("" + world.getSnakes().size());
@@ -42,7 +43,6 @@ public class Server{
 		//med paketet som är mottaget och socketen
 		PacketHandler thread = new PacketHandler(receivePacket, packetSocket, world);
 		//kör "run" funktionen i tråden (som en main funktion)
-		thread.run();
 	    }
 
         }catch(SocketException e){
