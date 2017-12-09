@@ -36,6 +36,7 @@ public class IDHandler implements Runnable{
 		if(mySnake.getName() == id){
 		    correctSnake = mySnake;
 		    idPos = "" + id + ";" + correctSnake.getHead();
+		    System.out.println("idhandler: " + idPos);
 		    sendData = idPos.getBytes();
 		    break;
 		}

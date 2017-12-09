@@ -22,6 +22,7 @@ public class Server{
 		byte[] receiveDataName = new byte[2048];
 		DatagramPacket receiveName = new DatagramPacket(receiveDataName, receiveDataName.length);
 		idSocket.receive(receiveName);
+		System.out.println("Server: " + receiveName.getData());
 		
 		IDHandler idThread = new IDHandler(receiveName, idSocket, ids.charAt(i), world);
 		idThread.run();

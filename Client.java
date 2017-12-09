@@ -179,7 +179,7 @@ class Client extends Canvas implements ActionListener {
 	byte[] receiveData = new byte[2048];
 	int port = 9877;
 	InetAddress ip = InetAddress.getByName("192.168.1.89");
-	DatagramSocket serverSocket = new DatagramSocket(port);
+	DatagramSocket serverSocket = new DatagramSocket();
 	
 
 	sendData = name.getBytes();
@@ -189,6 +189,7 @@ class Client extends Canvas implements ActionListener {
 	DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 	serverSocket.receive(receivePacket);
 	String idPos = new String(receivePacket.getData());
+	System.out.println("client sendName: " + idPos);
 	return idPos;
       	
     }
@@ -200,6 +201,7 @@ class Client extends Canvas implements ActionListener {
 	String playerName = sc.nextLine();
 	
 	String idPos = sendName(playerName);
+	System.out.println("client main: " + idPos);
 	client.makeMySnake(idPos, playerName);
 	
         client.initGame(client);
