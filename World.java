@@ -15,6 +15,8 @@ public class World {
 	int startX = 20;
 	int startY = 20;
 	int noSnakes = snake.size();
+	int uNames = noSnakes;
+	System.out.println("noSnakes: " + noSnakes);
 	switch (noSnakes) {
 	case 0:
 	    startX = 20;
@@ -27,9 +29,11 @@ public class World {
 	case 2:
 	    startX = 20;
 	    startY = 500;
+	    break;
 	case 3:
 	    startX = 700;
 	    startY = 20;
+	    break;
 	default:
 	    System.out.println("Fel antal snakes");
 	    break;
@@ -38,15 +42,16 @@ public class World {
 	Snake a = new Snake(name, pName, startX, startY);
         for (int i = 0; i < snake.size(); i++) {
             if (snake.get(i).getName() != name){
-                snake.add(a);
-		System.out.println("En ny orm");
+                uNames -= 1;
+		
             }
             else{
                 System.out.println(name + " finns redan");
             }
         }
-	if(snake.size() == 0){
+	if(uNames == 0){
 	    snake.add(a);
+	    System.out.println("En ny orm");
 	}
     }
     

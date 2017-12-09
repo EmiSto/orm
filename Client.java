@@ -129,8 +129,10 @@ class Client extends Canvas implements ActionListener {
 	    repaint();
 	    timer.setInitialDelay(pause);
 	    timer.start();
-	}catch(Exception ktffkf){
-	    System.out.println("throw that shit");
+	}catch(IOException e1){
+	    System.out.println("IOException");
+	}catch(Exception e2){
+	    System.out.println("Exception");
 	}
     }
 

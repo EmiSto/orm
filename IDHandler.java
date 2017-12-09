@@ -30,10 +30,9 @@ public class IDHandler implements Runnable{
 	System.out.println("running ID-handler thread");
 	try {
 	    String name = new String(receivePacket.getData());
-	    System.out.println("Name: " + name + "Id: " + id);
+	    System.out.println("Name: " + name + " Id: " + id);
 	    
 	    this.world.addSnake(id, name);
-	    System.out.println(id);
 	    Snake mySnake;
 	    Snake correctSnake;
 	    String idPos;
@@ -52,7 +51,8 @@ public class IDHandler implements Runnable{
 	    while(this.world.getSnakes().size() != this.players){
 		//wtf += 1;
 		//System.out.println("antal snakes: " +
-		System.out.println("Waiting for other players...");
+		System.out.println("Waiting for other players..." );
+		Thread.sleep(500);
 	        //System.out.println("antal snakes: " + this.world.getSnakes().size());
 		//do absolutely nothing
 	    }
@@ -64,6 +64,8 @@ public class IDHandler implements Runnable{
 	    System.out.println("Socket error");
 	} catch (IOException e) {
 	    System.out.println("IO error");
+	} catch (InterruptedException e) {
+	    System.out.println("Interrupt error");
 	}
 	System.out.println("Thread exiting.");
     }

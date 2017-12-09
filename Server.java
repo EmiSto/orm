@@ -8,7 +8,6 @@ public class Server{
 	try{
 	    //gör IdHandler som hanterar första paketet klienterna skickar, typ samma som PacketHandler, ge varje klient en unik ID
 	    //done
-	    int players = 2;
 	    String ids = "abcd";
 	    int port = 9876;
 	    int idPort = 9877;
@@ -17,16 +16,17 @@ public class Server{
 	    World world = new World();
 	    
 	    //gör en scanner &skit
-	    //Scanner sc = new Scanner(System.in);
-	    //int players = sc.nextInt();
-	    for(int i = 0; i <players;i++){
+	    Scanner sc = new Scanner(System.in);
+	    System.out.println("Antal spelare: ");
+	    int players = sc.nextInt();
+	    
+	    for(int i = 0; i < players;i++){
 		byte[] receiveDataName = new byte[2048];
 		DatagramPacket receiveName = new DatagramPacket(receiveDataName, receiveDataName.length);
 		idSocket.receive(receiveName);
-		System.out.println("Server: " + receiveName.getData());
 		
 		IDHandler idThread = new IDHandler(receiveName, idSocket, ids.charAt(i), world, players);
-		System.out.println("end of loop: " + i);
+		
 	    }
 	    	   
 	    System.out.println("" + world.getSnakes().size());
