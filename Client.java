@@ -14,7 +14,7 @@ import java.net.*;
 class Client extends Canvas implements ActionListener {
 
     private Timer timer;
-    private int speed = 400;
+    private int speed = 350;
     private int pause = 1000;
     private Parser parser = new Parser();
     //World w;
@@ -32,7 +32,20 @@ class Client extends Canvas implements ActionListener {
         int ballHeight = mySnake.getHeight();
 
         g.setColor(mySnake.getColor());
-        
+        //Om mySnake är död, rita ut game over
+        if (mySnake.isDead()) {
+
+            String msg = "Game Over";
+            Font small = new Font("Helvetica", Font.BOLD, 14);
+            FontMetrics metr = getFontMetrics(small);
+
+            g.setColor(Color.white);
+            g.setFont(small);
+            g.drawString(msg, worldX / 2 - metr.stringWidth(msg), metr.getHeight());
+
+            g.setColor(Color.gray);
+        }
+
         int nBalls = mySnake.getSize();
         ArrayList<Integer> xBalls = mySnake.getSnakeX();
         ArrayList<Integer> yBalls = mySnake.getSnakeY();
@@ -51,7 +64,6 @@ class Client extends Canvas implements ActionListener {
         //Rita alla andras ormar
         for (int i = 0; i < otherSnake.size(); i++) {
 
-            
             g.setColor(otherSnake.get(i).getColor());
             nBalls = otherSnake.get(i).getSize();
             xBalls = otherSnake.get(i).getSnakeX();
@@ -100,6 +112,15 @@ class Client extends Canvas implements ActionListener {
         String headX;
         String headY;
 
+        
+        //Uppdaterar Frukten
+        /* int fruitX = Integer.parseInt(info.get(0));
+        int fruitY = Integer.parseInt(info.get(1));
+        fruit.setxFruit(fruitX);
+        fruit.setyFruit(fruitY);
+        info.remove(0);
+        info.remove(0);*/
+        
         for (int i = 0; i < 1 + otherSnake.size(); i++) {
             id = info.get(0).charAt(0);
             headX = info.get(1);
@@ -128,8 +149,11 @@ class Client extends Canvas implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         try {
-            update();
+            if(mySnake.isDead() == false){
+                update();
+            }
             repaint();
+            mySnake.checkCollision();
             timer.setInitialDelay(pause);
             timer.start();
         } catch (IOException e1) {
@@ -189,25 +213,24 @@ class Client extends Canvas implements ActionListener {
                     headX = parsed.get(i + 1);
                     headY = parsed.get(i + 2);
                     snake = new Snake(id, "John Doe", headX, headY);
-                    
-                     
-            switch (id){
-                case 'a':
-                    snake.setColor(Color.green);
-                    break;
-                case 'b':
-                    snake.setColor(Color.BLUE);
-                    break;
-                case 'c':
-                    snake.setColor(Color.ORANGE);
-                    break;
-                case 'd':
-                    snake.setColor(Color.CYAN);
-                    break;
-                default:
-                    System.out.println("Det blev ingen färg");
-                    break;
-            }
+
+                    switch (id) {
+                        case 'a':
+                            snake.setColor(Color.green);
+                            break;
+                        case 'b':
+                            snake.setColor(Color.BLUE);
+                            break;
+                        case 'c':
+                            snake.setColor(Color.ORANGE);
+                            break;
+                        case 'd':
+                            snake.setColor(Color.CYAN);
+                            break;
+                        default:
+                            System.out.println("Det blev ingen färg");
+                            break;
+                    }
                     otherSnake.add(snake);
                 }
             }
@@ -217,25 +240,25 @@ class Client extends Canvas implements ActionListener {
     private void makeMySnake(String pos, String pName) {
         ArrayList<String> parsed = parser.parse(pos);
         mySnake = new Snake(parsed.get(0).charAt(0), pName, parsed.get(1), parsed.get(2));
-        
-        switch (parsed.get(0).charAt(0)){
-                case 'a':
-                    mySnake.setColor(Color.green);
-                    break;
-                case 'b':
-                    mySnake.setColor(Color.BLUE);
-                    break;
-                case 'c':
-                    mySnake.setColor(Color.ORANGE);
-                    break;
-                case 'd':
-                    mySnake.setColor(Color.CYAN);
-                    break;
-                default:
-                    System.out.println("Det blev ingen färg");
-                    break;
-            }
-        
+
+        switch (parsed.get(0).charAt(0)) {
+            case 'a':
+                mySnake.setColor(Color.green);
+                break;
+            case 'b':
+                mySnake.setColor(Color.BLUE);
+                break;
+            case 'c':
+                mySnake.setColor(Color.ORANGE);
+                break;
+            case 'd':
+                mySnake.setColor(Color.CYAN);
+                break;
+            default:
+                System.out.println("Det blev ingen färg");
+                break;
+        }
+
     }
 
     public static String sendName(String name) throws Exception {

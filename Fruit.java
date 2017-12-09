@@ -5,16 +5,20 @@ public class Fruit {
     int yFruit = 10;
     int fruitHeight = 20;
     int fruitWidth = 20;
-    
+
     int worldX;
     int worldY;
-    
+
+    public Fruit() {
+        this.worldX = 800 / 10 - 4;
+        this.worldY = 600 / 10 - 4;
+    }
 
     public Fruit(int x, int y) {
 
         this.worldX = x / 10 - 2;
         this.worldY = y / 10 - 2;
-        
+
         respawn();
     }
 
@@ -41,22 +45,25 @@ public class Fruit {
     public void setyFruit(int y) {
         this.yFruit = y;
     }
-    
-    public void respawn(){
-         while (this.xFruit % 20 != 0) {
+
+    public void respawn() {
+
+        do {
             this.xFruit = (int) (Math.random() * this.worldX) * 10;
-        }
-        while (this.yFruit % 20 != 0) {
+        } while (this.xFruit % 20 != 0);
+
+        do {
             this.yFruit = (int) (Math.random() * this.worldY) * 10;
-        }
+        } while (this.yFruit % 20 != 0);
+
     }
 
-    public static void main (String [] args){
-        Fruit f = new Fruit(800,600);
-        for(int i = 0; i < 5; i++){
-        f.respawn();
-        System.out.println("x pos: " + f.getxFruit());
-        System.out.println("y pos: " + f.getyFruit());
+    public static void main(String[] args) {
+        Fruit f = new Fruit(800, 600);
+        for (int i = 0; i < 5; i++) {
+            f.respawn();
+            System.out.println("x pos: " + f.getxFruit());
+            System.out.println("y pos: " + f.getyFruit());
         }
     }
 }
