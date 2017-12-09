@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.Timer;
@@ -48,7 +49,26 @@ class Client extends Canvas implements ActionListener {
 
         //Rita alla andras ormar
         for (int i = 0; i < otherSnake.size(); i++) {
-            g.setColor(otherSnake.get(i).getColor());
+
+            char name = otherSnake.get(i).getName();
+            switch (name) {
+                case 'a':
+                    g.setColor(Color.green);
+                    break;
+                case 'b':
+                    g.setColor(Color.BLUE);
+                    break;
+                case 'c':
+                    g.setColor(Color.ORANGE);
+                    break;
+                case 'd':
+                    g.setColor(Color.CYAN);
+                    break;
+                default:
+                    System.out.println("Det blev ingen färg");
+                    break;
+            }
+
             nBalls = otherSnake.get(i).getSize();
             xBalls = otherSnake.get(i).getSnakeX();
             yBalls = otherSnake.get(i).getSnakeY();
@@ -64,76 +84,75 @@ class Client extends Canvas implements ActionListener {
     }
 
     public void update() throws Exception {
-	sendDirections();
+        sendDirections();
     }
 
-    public void sendDirections()throws Exception{
-	DatagramSocket clientSocket = new DatagramSocket();
-	//String ip = "192.168.1.89";
-	String ip = "192.168.1.89";
-	int port = 9876;
-	InetAddress IPAddress = InetAddress.getByName(ip);
-	char[] direction = mySnake.getDirection();
-	String dirString = "" + direction[0] + direction[1];
-	
-	byte[] sendData = new byte[2048];
+    public void sendDirections() throws Exception {
+        DatagramSocket clientSocket = new DatagramSocket();
+        //String ip = "192.168.1.89";
+        String ip = "192.168.1.89";
+        int port = 9876;
+        InetAddress IPAddress = InetAddress.getByName(ip);
+        char[] direction = mySnake.getDirection();
+        String dirString = "" + direction[0] + direction[1];
+
+        byte[] sendData = new byte[2048];
         byte[] receiveData = new byte[2048];
-	sendData = dirString.getBytes();
-	DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
-	clientSocket.send(sendPacket);
+        sendData = dirString.getBytes();
+        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+        clientSocket.send(sendPacket);
 
-	DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-	clientSocket.receive(receivePacket);
-	String received = new String(receivePacket.getData());
-	System.out.println("Server: " + received);
-	addOtherSnakes(received);
-	updateSnakes(received);
+        DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+        clientSocket.receive(receivePacket);
+        String received = new String(receivePacket.getData());
+        System.out.println("Server: " + received);
+        addOtherSnakes(received);
+        updateSnakes(received);
     }
-    
-    public void updateSnakes(String snakes) {
-	ArrayList<String> info = parser.parse(snakes);
-	char id;
-	String headX;
-	String headY;
 
-	for (int i = 0; i < 1 + otherSnake.size(); i++) {
-	    id = info.get(0).charAt(0);
-	    headX = info.get(1);
-	    headY = info.get(2);
-	    // System.out.println(id);
-	    if(id == mySnake.getName()) {
-		mySnake.updateHead(headX, headY);		
-		info.remove(0);
-		info.remove(0);
-		info.remove(0);
-		System.out.println("Updated");
-	    }
-	    else{
-		for(int j = 0; j < otherSnake.size(); j++){
-		    if(id == otherSnake.get(j).getName()){
-			otherSnake.get(j).updateHead(headX, headY);
-			info.remove(0);
-			info.remove(0);
-			info.remove(0);
-		    }
-		}
-	    }
-        
+    public void updateSnakes(String snakes) {
+        ArrayList<String> info = parser.parse(snakes);
+        char id;
+        String headX;
+        String headY;
+
+        for (int i = 0; i < 1 + otherSnake.size(); i++) {
+            id = info.get(0).charAt(0);
+            headX = info.get(1);
+            headY = info.get(2);
+            // System.out.println(id);
+            if (id == mySnake.getName()) {
+                mySnake.updateHead(headX, headY);
+                info.remove(0);
+                info.remove(0);
+                info.remove(0);
+                System.out.println("Updated");
+            } else {
+                for (int j = 0; j < otherSnake.size(); j++) {
+                    if (id == otherSnake.get(j).getName()) {
+                        otherSnake.get(j).updateHead(headX, headY);
+                        info.remove(0);
+                        info.remove(0);
+                        info.remove(0);
+                    }
+                }
+            }
+
         }
 
     }
 
-    public void actionPerformed(ActionEvent e){
-	try{
-	    update();
-	    repaint();
-	    timer.setInitialDelay(pause);
-	    timer.start();
-	}catch(IOException e1){
-	    System.out.println("IOException");
-	}catch(Exception e2){
-	    System.out.println("Exception");
-	}
+    public void actionPerformed(ActionEvent e) {
+        try {
+            update();
+            repaint();
+            timer.setInitialDelay(pause);
+            timer.start();
+        } catch (IOException e1) {
+            System.out.println("IOException");
+        } catch (Exception e2) {
+            System.out.println("Exception");
+        }
     }
 
     private class TAdapter extends KeyAdapter {
@@ -171,67 +190,65 @@ class Client extends Canvas implements ActionListener {
         timer = new Timer(speed, this);
         timer.start();
     }
-    
+
     private void addOtherSnakes(String snakes) {
-	if(otherSnake.size() == 0) {
-	    ArrayList<String> parsed = parser.parse(snakes);
-	    char id;
-	    String headX;
-	    String headY;
-	    Snake snake;
-	    for(int i = 0; i < parsed.size(); i += 3){
-		
-		id = parsed.get(i).charAt(0);
-		if(id != mySnake.getName()){
-		    headX = parsed.get(i+1);
-		    headY = parsed.get(i+2);
-		    snake = new Snake(id, "John Doe", headX, headY);
-		    otherSnake.add(snake);
-		}
-	    }
-	}
+        if (otherSnake.size() == 0) {
+            ArrayList<String> parsed = parser.parse(snakes);
+            char id;
+            String headX;
+            String headY;
+            Snake snake;
+            for (int i = 0; i < parsed.size(); i += 3) {
+
+                id = parsed.get(i).charAt(0);
+                if (id != mySnake.getName()) {
+                    headX = parsed.get(i + 1);
+                    headY = parsed.get(i + 2);
+                    snake = new Snake(id, "John Doe", headX, headY);
+                    otherSnake.add(snake);
+                }
+            }
+        }
     }
 
-    private void makeMySnake(String pos, String pName){
-	ArrayList<String> parsed = parser.parse(pos);
-	mySnake = new Snake(parsed.get(0).charAt(0), pName, parsed.get(1), parsed.get(2));
+    private void makeMySnake(String pos, String pName) {
+        ArrayList<String> parsed = parser.parse(pos);
+        mySnake = new Snake(parsed.get(0).charAt(0), pName, parsed.get(1), parsed.get(2));
     }
 
-    public static String sendName(String name)throws Exception{
-	byte[] sendData = new byte[2048];
-	byte[] receiveData = new byte[2048];
-	int port = 9877;
-	InetAddress ip = InetAddress.getByName("192.168.1.89");
-	DatagramSocket serverSocket = new DatagramSocket();
-	
+    public static String sendName(String name) throws Exception {
+        byte[] sendData = new byte[2048];
+        byte[] receiveData = new byte[2048];
+        int port = 9877;
+        InetAddress ip = InetAddress.getByName("192.168.1.89");
+        DatagramSocket serverSocket = new DatagramSocket();
 
-	sendData = name.getBytes();
-	System.out.println("innan sendpacket");
-	DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
-	serverSocket.send(sendPacket);
-	System.out.println("efter socketsend");
-	
-	DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-	serverSocket.receive(receivePacket);
-	System.out.println("efter socket receive");
-	
-	String idPos = new String(receivePacket.getData());
-	System.out.println("client sendName: " + idPos);
-	return idPos;
-      	
+        sendData = name.getBytes();
+        System.out.println("innan sendpacket");
+        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
+        serverSocket.send(sendPacket);
+        System.out.println("efter socketsend");
+
+        DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+        serverSocket.receive(receivePacket);
+        System.out.println("efter socket receive");
+
+        String idPos = new String(receivePacket.getData());
+        System.out.println("client sendName: " + idPos);
+        return idPos;
+
     }
-    
-    public static void main(String args[]) throws Exception{
+
+    public static void main(String args[]) throws Exception {
         Client client = new Client();
-	Scanner sc = new Scanner(System.in);
-	System.out.println("Namn: ");
-	String playerName = sc.nextLine();
-	
-	String idPos = sendName(playerName);
-	System.out.println("client main: " + idPos);
-	client.makeMySnake(idPos, playerName);
-	
-	
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Namn: ");
+        String playerName = sc.nextLine();
+
+        String idPos = sendName(playerName);
+        System.out.println("client main: " + idPos);
+        client.makeMySnake(idPos, playerName);
+
         client.initGame(client);
     }
 }
