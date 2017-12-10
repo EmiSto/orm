@@ -24,7 +24,7 @@ class Client extends Canvas implements ActionListener {
 
     public Snake mySnake;
     public ArrayList<Snake> otherSnake = new ArrayList();
-    
+
     Fruit fruit = new Fruit();
 
     public void paint(Graphics g) {
@@ -79,7 +79,7 @@ class Client extends Canvas implements ActionListener {
             g.setColor(Color.red);
             g.fillRect(xBalls.get(nBalls - 1), yBalls.get(nBalls - 1), ballWidth, ballHeight);
         }
-        
+
         //Ritar frukten
         g.setColor(Color.pink);
         g.fillRect(fruit.getxFruit(), fruit.getyFruit(), fruit.getWidth(), fruit.getHeight());
@@ -98,8 +98,8 @@ class Client extends Canvas implements ActionListener {
         char[] direction = mySnake.getDirection();
         String dirString = "" + direction[0] + direction[1];
 
-        byte[] sendData = new byte[2048];
-        byte[] receiveData = new byte[2048];
+        byte[] sendData = new byte[16];
+        byte[] receiveData = new byte[16];
         sendData = dirString.getBytes();
         DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
         clientSocket.send(sendPacket);
@@ -110,8 +110,8 @@ class Client extends Canvas implements ActionListener {
         System.out.println("Server: " + received);
         addOtherSnakes(received);
         updateSnakes(received);
-	mySnake.checkCollision();
-	mySnake.checkOtherCollision(otherSnake);
+        mySnake.checkCollision();
+        mySnake.checkOtherCollision(otherSnake);
     }
 
     public void updateSnakes(String snakes) {
@@ -120,7 +120,13 @@ class Client extends Canvas implements ActionListener {
         String headX;
         String headY;
 
-        
+        //
+        char eater = info.get(0).charAt(0);
+        info.remove(0);
+        if (mySnake.getName() == eater) {
+            mySnake.grow();
+        }
+
         //Uppdaterar Frukten
         int fruitX = Integer.parseInt(info.get(0));
         int fruitY = Integer.parseInt(info.get(1));
@@ -128,7 +134,7 @@ class Client extends Canvas implements ActionListener {
         fruit.setyFruit(fruitY);
         info.remove(0);
         info.remove(0);
-        
+
         for (int i = 0; i < 1 + otherSnake.size(); i++) {
             id = info.get(0).charAt(0);
             headX = info.get(1);
@@ -139,9 +145,11 @@ class Client extends Canvas implements ActionListener {
                 info.remove(0);
                 info.remove(0);
                 info.remove(0);
-                System.out.println("Updated");
             } else {
                 for (int j = 0; j < otherSnake.size(); j++) {
+                    if (otherSnake.get(j).getName() == eater) {
+                        otherSnake.get(j).grow();
+                    }
                     if (id == otherSnake.get(j).getName()) {
                         otherSnake.get(j).updateHead(headX, headY);
                         info.remove(0);
@@ -157,7 +165,7 @@ class Client extends Canvas implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         try {
-            if(mySnake.isDead() == false){
+            if (mySnake.isDead() == false) {
                 update();
             }
             repaint();
@@ -214,11 +222,14 @@ class Client extends Canvas implements ActionListener {
             String headX;
             String headY;
             Snake snake;
-            
+
+            //tar bort ätaren
+            parsed.remove(0);
+
             //tar bort frukten
             parsed.remove(0);
             parsed.remove(0);
-            
+
             for (int i = 0; i < parsed.size(); i += 3) {
 
                 id = parsed.get(i).charAt(0);

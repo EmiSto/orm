@@ -131,7 +131,7 @@ public class Snake {
             System.out.println("Vänstervägg");
             this.dead = true;
         }
-        if (y >= worldY - ballHeight) {
+        if (y > worldY - ballHeight) {
             System.out.println("golvet");
             this.dead = true;
         }
