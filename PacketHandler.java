@@ -14,7 +14,7 @@ public class PacketHandler implements Runnable{
 
 	this.serverSocket = serverSocket;
 	this.receivePacket = receivePacket;
-	this.sendData = new byte[2048];
+	this.sendData = new byte[64];
 	this.world = world;
 	t = new Thread(this, "thread");
 	System.out.println("creating thread" );

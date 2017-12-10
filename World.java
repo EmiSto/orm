@@ -82,8 +82,8 @@ public class World {
     
     public String response(){
 	String data = "";
-        // data += fruit.getxFruit() + ";";
-        // data += fruit.getyFruit() + ";";
+        data += fruit.getxFruit() + ";";
+        data += fruit.getyFruit() + ";";
 	for(int i = 0; i < snake.size(); i++){
 	    data += snake.get(i).getName() + ";";
 	    data += snake.get(i).getHead();

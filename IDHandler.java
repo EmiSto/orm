@@ -16,7 +16,7 @@ public class IDHandler implements Runnable{
 
 	this.serverSocket = serverSocket;
 	this.receivePacket = receivePacket;
-	this.sendData = new byte[2048];
+	this.sendData = new byte[64];
 	this.id = id;
 	this.world = world;
 	this.players = players;

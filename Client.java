@@ -275,8 +275,8 @@ class Client extends Canvas implements ActionListener {
     }
 
     public static String sendName(String name) throws Exception {
-        byte[] sendData = new byte[2048];
-        byte[] receiveData = new byte[2048];
+        byte[] sendData = new byte[64];
+        byte[] receiveData = new byte[64];
         int port = 9877;
         InetAddress ip = InetAddress.getByName("192.168.1.89");
         DatagramSocket serverSocket = new DatagramSocket();
