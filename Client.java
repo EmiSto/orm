@@ -24,6 +24,8 @@ class Client extends Canvas implements ActionListener {
 
     public Snake mySnake;
     public ArrayList<Snake> otherSnake = new ArrayList();
+    
+    Fruit fruit = new Fruit();
 
     public void paint(Graphics g) {
 
@@ -116,12 +118,12 @@ class Client extends Canvas implements ActionListener {
 
         
         //Uppdaterar Frukten
-        /* int fruitX = Integer.parseInt(info.get(0));
+        int fruitX = Integer.parseInt(info.get(0));
         int fruitY = Integer.parseInt(info.get(1));
         fruit.setxFruit(fruitX);
         fruit.setyFruit(fruitY);
         info.remove(0);
-        info.remove(0);*/
+        info.remove(0);
         
         for (int i = 0; i < 1 + otherSnake.size(); i++) {
             id = info.get(0).charAt(0);
@@ -189,9 +191,9 @@ class Client extends Canvas implements ActionListener {
     }
 
     private void initGame(Client c) {
-        JFrame jf = new JFrame("Orm");
+        JFrame jf = new JFrame("New Window");
         setFocusable(true);
-        jf.setSize(worldX, worldY);
+        jf.setSize(worldX, worldY + 20);
         jf.setVisible(true);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.add(c);

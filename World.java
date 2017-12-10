@@ -66,6 +66,7 @@ public class World {
                 break;
             }
         }
+        fruit.respawn();
     }
     
     //Tittar om en orm åt en frukt
@@ -81,6 +82,8 @@ public class World {
     
     public String response(){
 	String data = "";
+        data += fruit.getxFruit() + ";";
+        data += fruit.getyFruit() + ";";
 	for(int i = 0; i < snake.size(); i++){
 	    data += snake.get(i).getName() + ";";
 	    data += snake.get(i).getHead();
