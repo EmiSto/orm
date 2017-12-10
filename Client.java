@@ -99,7 +99,7 @@ class Client extends Canvas implements ActionListener {
         String dirString = "" + direction[0] + direction[1];
 
         byte[] sendData = new byte[16];
-        byte[] receiveData = new byte[16];
+        byte[] receiveData = new byte[64];
         sendData = dirString.getBytes();
         DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
         clientSocket.send(sendPacket);
@@ -123,17 +123,17 @@ class Client extends Canvas implements ActionListener {
         //
         char eater = info.get(0).charAt(0);
         info.remove(0);
-        if (mySnake.getName() == eater) {
-            mySnake.grow();
-        }
 
         //Uppdaterar Frukten
         int fruitX = Integer.parseInt(info.get(0));
         int fruitY = Integer.parseInt(info.get(1));
-        fruit.setxFruit(fruitX);
-        fruit.setyFruit(fruitY);
+
         info.remove(0);
         info.remove(0);
+
+        if (fruit.getxFruit() != fruitX && fruit.getyFruit() != fruitY && mySnake.getName() == eater) {
+            mySnake.grow();
+        }
 
         for (int i = 0; i < 1 + otherSnake.size(); i++) {
             id = info.get(0).charAt(0);
@@ -147,8 +147,10 @@ class Client extends Canvas implements ActionListener {
                 info.remove(0);
             } else {
                 for (int j = 0; j < otherSnake.size(); j++) {
-                    if (otherSnake.get(j).getName() == eater) {
+                    if (fruit.getxFruit() != fruitX && fruit.getyFruit() != fruitY && otherSnake.get(j).getName() == eater) {
                         otherSnake.get(j).grow();
+                        fruit.setxFruit(fruitX);
+                        fruit.setyFruit(fruitY);
                     }
                     if (id == otherSnake.get(j).getName()) {
                         otherSnake.get(j).updateHead(headX, headY);
