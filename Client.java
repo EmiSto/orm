@@ -14,7 +14,7 @@ import java.net.*;
 class Client extends Canvas implements ActionListener {
 
     private Timer timer;
-    private int speed = 400;
+    private int speed = 350;
     private int pause = 1000;
     private Parser parser = new Parser();
     //World w;
@@ -92,6 +92,8 @@ class Client extends Canvas implements ActionListener {
         System.out.println("Server: " + received);
         addOtherSnakes(received);
         updateSnakes(received);
+	mySnake.checkCollision();
+	mySnake.checkOtherCollision(otherSnake);
     }
 
     public void updateSnakes(String snakes) {
