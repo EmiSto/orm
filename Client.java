@@ -14,7 +14,7 @@ import java.net.*;
 class Client extends Canvas implements ActionListener {
 
     private Timer timer;
-    private int speed = 350;
+    private int speed = 400;
     private int pause = 1000;
     private Parser parser = new Parser();
     //World w;
@@ -189,7 +189,7 @@ class Client extends Canvas implements ActionListener {
     }
 
     private void initGame(Client c) {
-        JFrame jf = new JFrame("New Window");
+        JFrame jf = new JFrame("Orm");
         setFocusable(true);
         jf.setSize(worldX, worldY);
         jf.setVisible(true);

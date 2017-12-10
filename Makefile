@@ -5,8 +5,13 @@ JC = javac
 
 default: .java.class
 
+makeclient: $(JC) Client.java
+
 clean:
 	$(RM) *.class
 
 client:
 	$(JC) Client.java
+
+run:
+	java Client

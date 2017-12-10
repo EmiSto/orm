@@ -127,7 +127,7 @@ public class Snake {
             System.out.println("högervägg");
             this.dead = true;
         }
-        if (x < 0 + ballWidth) {
+        if (x < 0) {
             System.out.println("Vänstervägg");
             this.dead = true;
         }
@@ -135,7 +135,7 @@ public class Snake {
             System.out.println("golvet");
             this.dead = true;
         }
-        if (y < 0 + ballHeight) {
+        if (y < 0) {
             System.out.println("taket");
             this.dead = true;
         }
