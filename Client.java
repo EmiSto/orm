@@ -132,7 +132,7 @@ class Client extends Canvas implements ActionListener {
         info.remove(0);
 
         if (fruit.getxFruit() != fruitX && fruit.getyFruit() != fruitY && mySnake.getName() == eater) {
-            //mySnake.grow();
+            mySnake.grow();
             fruit.setxFruit(fruitX);
             fruit.setyFruit(fruitY);
         }
@@ -150,7 +150,7 @@ class Client extends Canvas implements ActionListener {
             } else {
                 for (int j = 0; j < otherSnake.size(); j++) {
                     if (fruit.getxFruit() != fruitX && fruit.getyFruit() != fruitY && otherSnake.get(j).getName() == eater) {
-                        //otherSnake.get(j).grow();
+                        otherSnake.get(j).grow();
                         fruit.setxFruit(fruitX);
                         fruit.setyFruit(fruitY);
                     }
@@ -178,23 +178,19 @@ class Client extends Canvas implements ActionListener {
             timer.start();
         } catch (IOException e1) {
             System.out.println("IOException");
-	    
+
         } catch (ArrayIndexOutOfBoundsException e2) {
-	    System.out.println("Arrayindex out of obunds");
-	}
-	catch (NullPointerException e3) {
-	    System.out.println("Nullpointer");
-	}
-	catch (IndexOutOfBoundsException e4) {
-	    System.out.println(" Index out of bounds");
-	}
-	catch (IllegalStateException e5) {
-	    System.out.println("Illegal Stat");
-	}
-	catch (Exception e6) {
+            System.out.println("Arrayindex out of obunds");
+        } catch (NullPointerException e3) {
+            System.out.println("Nullpointer");
+        } catch (IndexOutOfBoundsException e4) {
+            System.out.println(" Index out of bounds");
+        } catch (IllegalStateException e5) {
+            System.out.println("Illegal Stat");
+        } catch (Exception e6) {
             System.out.println("Exception");
         }
-	
+
     }
 
     private class TAdapter extends KeyAdapter {
@@ -235,7 +231,7 @@ class Client extends Canvas implements ActionListener {
 
     private void addOtherSnakes(String snakes) {
         if (otherSnake.size() == 0) {
-            
+
             ArrayList<String> parsed = parser.parse(snakes);
             char id;
             String headX;
@@ -314,17 +310,15 @@ class Client extends Canvas implements ActionListener {
         DatagramSocket serverSocket = new DatagramSocket();
 
         sendData = name.getBytes();
-        
+
         DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
         serverSocket.send(sendPacket);
-        
 
         DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
         serverSocket.receive(receivePacket);
-        
 
         String idPos = new String(receivePacket.getData());
-        
+
         return idPos;
 
     }
@@ -336,7 +330,7 @@ class Client extends Canvas implements ActionListener {
         String playerName = sc.nextLine();
 
         String idPos = sendName(playerName);
-        
+
         client.makeMySnake(idPos, playerName);
 
         client.initGame(client);
