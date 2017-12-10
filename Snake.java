@@ -141,6 +141,22 @@ public class Snake {
         }
     }
 
+    public void checkOtherCollision(ArrayList<Snake> snakes){
+	ArrayList<Integer> xBalls;
+	ArrayList<Integer> yBalls;
+	
+	for(int j = 0; j < snakes.size(); j++){
+	    xBalls = snakes.get(j).getSnakeX();
+	    yBalls = snakes.get(j).getSnakeY();
+	    for (int i = 0; i < nBalls - 1; i++) {
+		if ((this.xBalls.get(nBalls - 1).equals(xBalls.get(i))) && (this.yBalls.get(nBalls - 1).equals(yBalls.get(i)))) {
+		    System.out.println("Game over, collided with: " + snakes.get(j).getName());
+		    this.dead = true;
+		}
+	    }
+	}
+    }
+
     public void move() {
         int x;
         int y;
