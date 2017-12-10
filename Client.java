@@ -79,6 +79,10 @@ class Client extends Canvas implements ActionListener {
             g.setColor(Color.red);
             g.fillRect(xBalls.get(nBalls - 1), yBalls.get(nBalls - 1), ballWidth, ballHeight);
         }
+        
+        //Ritar frukten
+        g.setColor(Color.pink);
+        g.fillRect(fruit.getxFruit(), fruit.getyFruit(), fruit.getWidth(), fruit.getHeight());
     }
 
     public void update() throws Exception {
@@ -118,12 +122,12 @@ class Client extends Canvas implements ActionListener {
 
         
         //Uppdaterar Frukten
-        // int fruitX = Integer.parseInt(info.get(0));
-        // int fruitY = Integer.parseInt(info.get(1));
-        // fruit.setxFruit(fruitX);
-        // fruit.setyFruit(fruitY);
-        // info.remove(0);
-        // info.remove(0);
+        int fruitX = Integer.parseInt(info.get(0));
+        int fruitY = Integer.parseInt(info.get(1));
+        fruit.setxFruit(fruitX);
+        fruit.setyFruit(fruitY);
+        info.remove(0);
+        info.remove(0);
         
         for (int i = 0; i < 1 + otherSnake.size(); i++) {
             id = info.get(0).charAt(0);
@@ -210,6 +214,11 @@ class Client extends Canvas implements ActionListener {
             String headX;
             String headY;
             Snake snake;
+            
+            //tar bort frukten
+            parsed.remove(0);
+            parsed.remove(0);
+            
             for (int i = 0; i < parsed.size(); i += 3) {
 
                 id = parsed.get(i).charAt(0);
