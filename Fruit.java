@@ -1,8 +1,8 @@
 
 public class Fruit {
 
-    int xFruit = 10;
-    int yFruit = 10;
+    int xFruit = 20;
+    int yFruit = 20;
     int fruitHeight = 20;
     int fruitWidth = 20;
 
