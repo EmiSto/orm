@@ -64,9 +64,9 @@ public class IDHandler implements Runnable{
 	    System.out.println("Socket error");
 	} catch (IOException e) {
 	    System.out.println("IO error");
-	} catch (InterruptedException e) {
-	    System.out.println("Interrupt error");
-	}
+	} //catch (InterruptedException e) {
+	// System.out.println("Interrupt error");
+	//}
 	System.out.println("Thread exiting.");
     }
 }
