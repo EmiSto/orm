@@ -14,7 +14,7 @@ import java.net.*;
 class Client extends Canvas implements ActionListener {
 
     private Timer timer;
-    private int speed = 400;
+    private int speed = 200;
     private int pause = 1000;
     private Parser parser = new Parser();
     //World w;
@@ -118,12 +118,12 @@ class Client extends Canvas implements ActionListener {
 
         
         //Uppdaterar Frukten
-        int fruitX = Integer.parseInt(info.get(0));
-        int fruitY = Integer.parseInt(info.get(1));
-        fruit.setxFruit(fruitX);
-        fruit.setyFruit(fruitY);
-        info.remove(0);
-        info.remove(0);
+        // int fruitX = Integer.parseInt(info.get(0));
+        // int fruitY = Integer.parseInt(info.get(1));
+        // fruit.setxFruit(fruitX);
+        // fruit.setyFruit(fruitY);
+        // info.remove(0);
+        // info.remove(0);
         
         for (int i = 0; i < 1 + otherSnake.size(); i++) {
             id = info.get(0).charAt(0);

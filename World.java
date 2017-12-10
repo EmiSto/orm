@@ -25,16 +25,16 @@ public class World {
 	    startY = 20;
 	    break;
 	case 1:
-	    startX = 700;
-	    startY = 500;
+	    startX = 20;
+	    startY = 160;
 	    break;
 	case 2:
 	    startX = 20;
-	    startY = 500;
+	    startY = 300;
 	    break;
 	case 3:
-	    startX = 700;
-	    startY = 20;
+	    startX = 20;
+	    startY = 440;
 	    break;
 	default:
 	    System.out.println("Fel antal snakes");
@@ -82,8 +82,8 @@ public class World {
     
     public String response(){
 	String data = "";
-        data += fruit.getxFruit() + ";";
-        data += fruit.getyFruit() + ";";
+        // data += fruit.getxFruit() + ";";
+        // data += fruit.getyFruit() + ";";
 	for(int i = 0; i < snake.size(); i++){
 	    data += snake.get(i).getName() + ";";
 	    data += snake.get(i).getHead();

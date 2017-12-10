@@ -52,7 +52,7 @@ public class IDHandler implements Runnable{
 		//wtf += 1;
 		//System.out.println("antal snakes: " +
 		System.out.println("Waiting for other players..." );
-		Thread.sleep(500);
+		Thread.sleep(100);
 	        //System.out.println("antal snakes: " + this.world.getSnakes().size());
 		//do absolutely nothing
 	    }
