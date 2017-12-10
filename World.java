@@ -6,6 +6,8 @@ import java.util.ArrayList;
 public class World {
 
     ArrayList<Snake> snake = new ArrayList();
+    
+    Fruit fruit = new Fruit(800,600);
 
     public World() {
 
@@ -66,6 +68,17 @@ public class World {
         }
     }
     
+    //Tittar om en orm åt en frukt
+    public boolean eat(Snake s) {
+        int nBalls = s.getSize();
+        int xHead = s.getSnakeX().get(nBalls - 1);
+        int yHead = s.getSnakeY().get(nBalls - 1);
+        if (xHead == fruit.getxFruit() && yHead == fruit.getyFruit()) {
+            return true;
+        }
+        return false;
+    }
+    
     public String response(){
 	String data = "";
 	for(int i = 0; i < snake.size(); i++){
@@ -77,5 +90,9 @@ public class World {
     
     public ArrayList<Snake> getSnakes(){
         return this.snake;
+    }
+    
+    public String getFruit() {
+        return "" + fruit.getxFruit() + ";" + fruit.getyFruit() + ";";
     }
 }
