@@ -21,13 +21,13 @@ public class IDHandler implements Runnable{
 	this.world = world;
 	this.players = players;
 	t = new Thread(this, "thread");
-	System.out.println("creating id-handler thread" );
+	
 	t.start();
     }
    
     //kod som alla trådar kör
     public void run(){
-	System.out.println("running ID-handler thread");
+	
 	try {
 	    String name = new String(receivePacket.getData());
 	    System.out.println("Name: " + name + " Id: " + id);
@@ -42,7 +42,7 @@ public class IDHandler implements Runnable{
 		if(mySnake.getName() == id){
 		    correctSnake = mySnake;
 		    idPos = "" + id + ";" + correctSnake.getHead();
-		    System.out.println("idhandler: " + idPos);
+		    
 		    sendData = idPos.getBytes();
 		    break;
 		}
@@ -67,7 +67,7 @@ public class IDHandler implements Runnable{
 	} //catch (InterruptedException e) {
 	// System.out.println("Interrupt error");
 	//}
-	System.out.println("Thread exiting.");
+	
     }
 }
 

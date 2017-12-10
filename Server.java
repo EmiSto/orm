@@ -6,8 +6,8 @@ public class Server{
 
     public static void main(String args[]){
 	try{
-	    //gör IdHandler som hanterar första paketet klienterna skickar, typ samma som PacketHandler, ge varje klient en unik ID
-	    //done
+	    
+	    
 	    String ids = "abcd";
 	    int port = 9876;
 	    int idPort = 9877;
@@ -22,7 +22,7 @@ public class Server{
 	    int players = sc.nextInt();
 	    
 	    for(int i = 0; i < players;i++){
-		byte[] receiveDataName = new byte[2048];
+		byte[] receiveDataName = new byte[64];
 		DatagramPacket receiveName = new DatagramPacket(receiveDataName, receiveDataName.length);
 		idSocket.receive(receiveName);
 		
@@ -33,11 +33,14 @@ public class Server{
 	    System.out.println("" + world.getSnakes().size());
 	    
 	    DatagramSocket packetSocket = new DatagramSocket(port);
+
+
 	    
 	    while(true){
 		//väntar till någon skickar ett paket genom socketen
-		byte[] receiveData = new byte[2048];
+		byte[] receiveData = new byte[64];
 		DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+		
 		packetSocket.receive(receivePacket);
 
 		//Anropar konstruktorn för PacketHandler

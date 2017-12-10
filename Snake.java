@@ -124,19 +124,19 @@ public class Snake {
             }
         }
         if (x >= worldX - ballWidth) {
-            System.out.println("högervägg");
+            
             this.dead = true;
         }
         if (x < 0) {
-            System.out.println("Vänstervägg");
+            
             this.dead = true;
         }
         if (y > worldY - ballHeight) {
-            System.out.println("golvet");
+            
             this.dead = true;
         }
         if (y < 0) {
-            System.out.println("taket");
+            
             this.dead = true;
         }
     }

@@ -9,7 +9,7 @@ public class World {
 
     Fruit fruit = new Fruit(800, 600);
 
-    char eater;
+    char eater = 'z';
 
     public World() {
 
@@ -20,7 +20,7 @@ public class World {
         int startY = 20;
         int noSnakes = snake.size();
         int uNames = noSnakes;
-        System.out.println("noSnakes: " + noSnakes);
+        
         switch (noSnakes) {
             case 0:
                 startX = 20;
@@ -54,7 +54,7 @@ public class World {
         }
         if (uNames == 0) {
             snake.add(a);
-            System.out.println("En ny orm");
+            System.out.println("Skapar en ny orm");
         }
     }
 
@@ -72,6 +72,7 @@ public class World {
             if (eat(snake.get(i))) {
                 fruit.respawn();
                 eater = snake.get(i).getName();
+		snake.get(i).grow();
                 System.out.println("frukten åts av " + eater);
                 break;
             }

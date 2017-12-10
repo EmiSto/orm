@@ -17,13 +17,13 @@ public class PacketHandler implements Runnable{
 	this.sendData = new byte[64];
 	this.world = world;
 	t = new Thread(this, "thread");
-	System.out.println("creating thread" );
+	
 	t.start();
 	  
     }
     //kod som alla trådar kör
     public void run(){
-	System.out.println("running thread");
+	
 	try {
 	    //kalla på funktion som uppdaterar gamestate
 	    //lägg in det som ska skickas tillbaks till klienten i "msg"
@@ -33,7 +33,6 @@ public class PacketHandler implements Runnable{
 	    char[] chars = {c1,c2};
 
 	    world.updatePosition(chars);
-	    System.out.println("id: " + c1 + "dir: " + c2);
 	    //this.sendData = world.response().getBytes();
 	    this.sendData = (world.response()).getBytes();
 	    //Gör om msg till ett DatagramPacket som sedan skickas till klienten genom socketen
@@ -48,7 +47,7 @@ public class PacketHandler implements Runnable{
 	} catch (IOException e) {
 	    System.out.println("IO error");
 	}
-	System.out.println("Thread exiting.");
+	
     }
 }
 

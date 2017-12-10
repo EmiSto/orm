@@ -92,7 +92,7 @@ class Client extends Canvas implements ActionListener {
     public void sendDirections() throws Exception {
         DatagramSocket clientSocket = new DatagramSocket();
         //String ip = "192.168.1.89";
-        String ip = "192.168.1.89";
+        String ip = "192.168.1.117";
         int port = 9876;
         InetAddress IPAddress = InetAddress.getByName(ip);
         char[] direction = mySnake.getDirection();
@@ -132,7 +132,7 @@ class Client extends Canvas implements ActionListener {
         info.remove(0);
 
         if (fruit.getxFruit() != fruitX && fruit.getyFruit() != fruitY && mySnake.getName() == eater) {
-            mySnake.grow();
+            //mySnake.grow();
             fruit.setxFruit(fruitX);
             fruit.setyFruit(fruitY);
         }
@@ -150,7 +150,7 @@ class Client extends Canvas implements ActionListener {
             } else {
                 for (int j = 0; j < otherSnake.size(); j++) {
                     if (fruit.getxFruit() != fruitX && fruit.getyFruit() != fruitY && otherSnake.get(j).getName() == eater) {
-                        otherSnake.get(j).grow();
+                        //otherSnake.get(j).grow();
                         fruit.setxFruit(fruitX);
                         fruit.setyFruit(fruitY);
                     }
@@ -178,9 +178,23 @@ class Client extends Canvas implements ActionListener {
             timer.start();
         } catch (IOException e1) {
             System.out.println("IOException");
-        } catch (Exception e2) {
+	    
+        } catch (ArrayIndexOutOfBoundsException e2) {
+	    System.out.println("Arrayindex out of obunds");
+	}
+	catch (NullPointerException e3) {
+	    System.out.println("Nullpointer");
+	}
+	catch (IndexOutOfBoundsException e4) {
+	    System.out.println(" Index out of bounds");
+	}
+	catch (IllegalStateException e5) {
+	    System.out.println("Illegal Stat");
+	}
+	catch (Exception e6) {
             System.out.println("Exception");
         }
+	
     }
 
     private class TAdapter extends KeyAdapter {
@@ -207,7 +221,7 @@ class Client extends Canvas implements ActionListener {
     }
 
     private void initGame(Client c) {
-        JFrame jf = new JFrame("New Window");
+        JFrame jf = new JFrame("Orm pre-alpha v0.1");
         setFocusable(true);
         jf.setSize(worldX, worldY + 20);
         jf.setVisible(true);
@@ -247,7 +261,7 @@ class Client extends Canvas implements ActionListener {
 
                     switch (id) {
                         case 'a':
-                            snake.setColor(Color.green);
+                            snake.setColor(Color.GREEN);
                             break;
                         case 'b':
                             snake.setColor(Color.BLUE);
@@ -274,7 +288,7 @@ class Client extends Canvas implements ActionListener {
 
         switch (parsed.get(0).charAt(0)) {
             case 'a':
-                mySnake.setColor(Color.green);
+                mySnake.setColor(Color.GREEN);
                 break;
             case 'b':
                 mySnake.setColor(Color.BLUE);
@@ -296,21 +310,21 @@ class Client extends Canvas implements ActionListener {
         byte[] sendData = new byte[64];
         byte[] receiveData = new byte[64];
         int port = 9877;
-        InetAddress ip = InetAddress.getByName("192.168.1.89");
+        InetAddress ip = InetAddress.getByName("192.168.1.117");
         DatagramSocket serverSocket = new DatagramSocket();
 
         sendData = name.getBytes();
-        System.out.println("innan sendpacket");
+        
         DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ip, port);
         serverSocket.send(sendPacket);
-        System.out.println("efter socketsend");
+        
 
         DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
         serverSocket.receive(receivePacket);
-        System.out.println("efter socket receive");
+        
 
         String idPos = new String(receivePacket.getData());
-        System.out.println("client sendName: " + idPos);
+        
         return idPos;
 
     }
@@ -322,7 +336,7 @@ class Client extends Canvas implements ActionListener {
         String playerName = sc.nextLine();
 
         String idPos = sendName(playerName);
-        System.out.println("client main: " + idPos);
+        
         client.makeMySnake(idPos, playerName);
 
         client.initGame(client);
