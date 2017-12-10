@@ -236,9 +236,9 @@ public class Snake {
     public void updateHead(String hX, String hY) {
         int headX = Integer.parseInt(hX);
         int headY = Integer.parseInt(hY);
-        xBalls.add(xBalls.size()-1, headX);
+        xBalls.add(xBalls.size(), headX);
         xBalls.remove(0);
-        yBalls.add(yBalls.size()-1, headY);
+        yBalls.add(yBalls.size(), headY);
         yBalls.remove(0);
     }
 
