@@ -133,6 +133,8 @@ class Client extends Canvas implements ActionListener {
 
         if (fruit.getxFruit() != fruitX && fruit.getyFruit() != fruitY && mySnake.getName() == eater) {
             mySnake.grow();
+            fruit.setxFruit(fruitX);
+            fruit.setyFruit(fruitY);
         }
 
         for (int i = 0; i < 1 + otherSnake.size(); i++) {
@@ -219,6 +221,7 @@ class Client extends Canvas implements ActionListener {
 
     private void addOtherSnakes(String snakes) {
         if (otherSnake.size() == 0) {
+            
             ArrayList<String> parsed = parser.parse(snakes);
             char id;
             String headX;
@@ -228,6 +231,8 @@ class Client extends Canvas implements ActionListener {
             //tar bort ätaren
             parsed.remove(0);
 
+            fruit.setxFruit(Integer.parseInt(parsed.get(0)));
+            fruit.setyFruit(Integer.parseInt(parsed.get(1)));
             //tar bort frukten
             parsed.remove(0);
             parsed.remove(0);

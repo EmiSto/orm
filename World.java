@@ -8,10 +8,8 @@ public class World {
     ArrayList<Snake> snake = new ArrayList();
 
     Fruit fruit = new Fruit(800, 600);
-    
-    char eater = 'z';
-    
-    
+
+    char eater;
 
     public World() {
 
@@ -74,9 +72,10 @@ public class World {
             if (eat(snake.get(i))) {
                 fruit.respawn();
                 eater = snake.get(i).getName();
+                System.out.println("frukten åts av " + eater);
                 break;
             }
-            eater = 'z';
+            
         }
 
     }
@@ -94,13 +93,14 @@ public class World {
 
     public String response() {
         String data = "";
+        
         //den som åt
         data += this.eater + ";";
-        
+
         //frukten
         data += fruit.getxFruit() + ";";
         data += fruit.getyFruit() + ";";
-        
+
         //ormarna
         for (int i = 0; i < snake.size(); i++) {
             data += snake.get(i).getName() + ";";
