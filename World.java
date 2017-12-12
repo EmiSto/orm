@@ -20,7 +20,7 @@ public class World {
         int startY = 20;
         int noSnakes = snake.size();
         int uNames = noSnakes;
-        
+
         switch (noSnakes) {
             case 0:
                 startX = 20;
@@ -61,10 +61,12 @@ public class World {
     //sätter ny riktning och flyttar ormen
     public void updatePosition(char c[]) {
         for (int i = 0; i < snake.size(); i++) {
-            if (snake.get(i).getName() == c[0]) {
-                snake.get(i).setDirection(c[1]);
-                snake.get(i).move();
-                break;
+            if (!snake.get(i).isDead()) {
+                if (snake.get(i).getName() == c[0]) {
+                    snake.get(i).setDirection(c[1]);
+                    snake.get(i).move();
+                    break;
+                }
             }
         }
 
@@ -72,11 +74,11 @@ public class World {
             if (eat(snake.get(i))) {
                 fruit.respawn();
                 eater = snake.get(i).getName();
-		snake.get(i).grow();
+                snake.get(i).grow();
                 System.out.println("frukten åts av " + eater);
                 break;
             }
-            
+
         }
 
     }
@@ -94,7 +96,7 @@ public class World {
 
     public String response() {
         String data = "";
-        
+
         //den som åt
         data += this.eater + ";";
 
