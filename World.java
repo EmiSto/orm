@@ -60,14 +60,12 @@ public class World {
 
     //sätter ny riktning och flyttar ormen
     public void updatePosition(char c[]) {
-        for (int i = 0; i < snake.size(); i++) {
-            if (!snake.get(i).isDead()) {
+        for (int i = 0; i < snake.size(); i++) {     
                 if (snake.get(i).getName() == c[0]) {
                     snake.get(i).setDirection(c[1]);
                     snake.get(i).move();
                     break;
-                }
-            }
+                }    
         }
 
         for (int i = 0; i < snake.size(); i++) {
