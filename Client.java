@@ -60,6 +60,15 @@ class Client extends Canvas implements ActionListener {
             y = yBalls.get(i);
             g.fillRect(x, y, ballWidth, ballHeight);
         }
+        
+        //Skriv vilken färg du är
+         String msg = mySnake.getPlayerName();
+            Font small = new Font("Helvetica", Font.BOLD, 14);
+            FontMetrics metr = getFontMetrics(small);
+
+            g.setFont(small);
+            g.drawString(msg, 20, 20);
+        
         g.setColor(Color.red);
         g.fillRect(xBalls.get(nBalls - 1), yBalls.get(nBalls - 1), ballWidth, ballHeight);
 
