@@ -142,14 +142,14 @@ public class Snake {
     }
 
     public void checkOtherCollision(ArrayList<Snake> snakes){
-	ArrayList<Integer> xBalls;
-	ArrayList<Integer> yBalls;
+	ArrayList<Integer> BallsX;
+	ArrayList<Integer> BallsY;
 	
 	for(int j = 0; j < snakes.size(); j++){
-	    xBalls = snakes.get(j).getSnakeX();
-	    yBalls = snakes.get(j).getSnakeY();
-	    for (int i = 0; i < nBalls - 1; i++) {
-		if ((this.xBalls.get(nBalls - 1).equals(xBalls.get(i))) && (this.yBalls.get(nBalls - 1).equals(yBalls.get(i)))) {
+	    BallsX = snakes.get(j).getSnakeX();
+	    BallsY = snakes.get(j).getSnakeY();
+	    for (int i = 0; i < BallsX.size()-1; i++) {
+		if ((this.xBalls.get(nBalls - 1).equals(BallsX.get(i))) && (this.yBalls.get(nBalls - 1).equals(BallsY.get(i)))) {
 		    System.out.println("Game over, collided with: " + snakes.get(j).getName());
 		    this.dead = true;
 		}
@@ -236,9 +236,9 @@ public class Snake {
     public void updateHead(String hX, String hY) {
         int headX = Integer.parseInt(hX);
         int headY = Integer.parseInt(hY);
-        xBalls.add(xBalls.size()-1, headX);
+        xBalls.add(xBalls.size(), headX);
         xBalls.remove(0);
-        yBalls.add(yBalls.size()-1, headY);
+        yBalls.add(yBalls.size(), headY);
         yBalls.remove(0);
     }
 

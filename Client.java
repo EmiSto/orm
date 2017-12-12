@@ -92,7 +92,7 @@ class Client extends Canvas implements ActionListener {
     public void sendDirections() throws Exception {
         DatagramSocket clientSocket = new DatagramSocket();
         //String ip = "192.168.1.89";
-        String ip = "192.168.1.117";
+        String ip = "192.168.1.125";
         int port = 9876;
         InetAddress IPAddress = InetAddress.getByName(ip);
         char[] direction = mySnake.getDirection();
@@ -133,6 +133,8 @@ class Client extends Canvas implements ActionListener {
 
         if (fruit.getxFruit() != fruitX && fruit.getyFruit() != fruitY && mySnake.getName() == eater) {
             mySnake.grow();
+            System.out.println("nBalls: " + mySnake.getSize());
+            System.out.println("xSize: " + mySnake.xBalls.size());
             fruit.setxFruit(fruitX);
             fruit.setyFruit(fruitY);
         }
@@ -306,7 +308,7 @@ class Client extends Canvas implements ActionListener {
         byte[] sendData = new byte[64];
         byte[] receiveData = new byte[64];
         int port = 9877;
-        InetAddress ip = InetAddress.getByName("192.168.1.117");
+        InetAddress ip = InetAddress.getByName("192.168.1.125");
         DatagramSocket serverSocket = new DatagramSocket();
 
         sendData = name.getBytes();
