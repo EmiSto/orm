@@ -14,7 +14,7 @@ public class Server{
 	    
 	    DatagramSocket idSocket = new DatagramSocket(idPort);
 	    World world = new World();
-            world.fruit.respawn();
+            //world.fruit.respawn();
 	    
 	    //gör en scanner &skit
 	    Scanner sc = new Scanner(System.in);

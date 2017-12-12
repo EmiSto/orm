@@ -57,13 +57,4 @@ public class Fruit {
         } while (this.yFruit % 20 != 0);
 
     }
-
-    public static void main(String[] args) {
-        Fruit f = new Fruit(800, 600);
-        for (int i = 0; i < 5; i++) {
-            f.respawn();
-            System.out.println("x pos: " + f.getxFruit());
-            System.out.println("y pos: " + f.getyFruit());
-        }
-    }
 }
