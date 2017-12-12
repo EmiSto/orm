@@ -175,7 +175,8 @@ class Client extends Canvas implements ActionListener {
             }
 
         }
-
+	fruit.setxFruit(fruitX);
+	fruit.setyFruit(fruitY);
     }
 
     public void actionPerformed(ActionEvent e) {
