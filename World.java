@@ -7,7 +7,7 @@ public class World {
 
     ArrayList<Snake> snake = new ArrayList();
 
-    Fruit fruit = new Fruit(800, 600);
+    volatile Fruit fruit = new Fruit(800, 600);
 
     char eater = 'z';
 
